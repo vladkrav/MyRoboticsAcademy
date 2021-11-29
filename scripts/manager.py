@@ -164,17 +164,17 @@ class Commands:
         host_thread = DockerThread(host_cmd)
         host_thread.start()
         # Wait until websocket server is set up
-        server_ready = False
-        while not server_ready:
-            try:
-                f = open("/home/vlad/logs/ws_code.log", "r")
-                if f.readline() == "websocket_code=ready":
-                    server_ready = True
-                f.close()
-                time.sleep(0.2)
-            except Exception as e: 
-                print("waiting for ws code server...")
-                time.sleep(0.2)
+        # server_ready = False
+        # while not server_ready:
+        #     try:
+        #         f = open("/home/vlad/logs/ws_code.log", "r")
+        #         if f.readline() == "websocket_code=ready":
+        #             server_ready = True
+        #         f.close()
+        #         time.sleep(0.2)
+        #     except Exception as e: 
+        #         print("waiting for ws code server...")
+        #         time.sleep(0.2)
 
         try:
             gui_cmd = self.instructions[exercise]["instructions_gui"]
@@ -184,17 +184,17 @@ class Commands:
             gui_thread = DockerThread(gui_cmd)
             gui_thread.start()
             # Wait until websocket server is set up
-            server_ready = False
-            while not server_ready:
-                try:
-                    f = open("/home/vlad/logs/ws_gui.log", "r")
-                    if f.readline() == "websocket_gui=ready":
-                        server_ready = True
-                    f.close()
-                    time.sleep(0.2)
-                except Exception as e: 
-                    print("waiting for ws guest server...")
-                    time.sleep(0.2)
+            # server_ready = False
+            # while not server_ready:
+            #     try:
+            #         f = open("/home/vlad/logs/ws_gui.log", "r")
+            #         if f.readline() == "websocket_gui=ready":
+            #             server_ready = True
+            #         f.close()
+            #         time.sleep(0.2)
+            #     except Exception as e: 
+            #         print("waiting for ws guest server...")
+            #         time.sleep(0.2)
         except KeyError:
             pass
 
