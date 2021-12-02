@@ -93,11 +93,9 @@ class GUI:
         self.server = WebsocketServer(port=2303, host=self.host)
         self.server.set_fn_new_client(self.get_client)
         self.server.set_fn_message_received(self.get_message)
-        print("Llega hasta el gui")
         logged = False
         while not logged:
             try:
-                print("Intenta escribir el archivo gui")
                 f = open("/home/vlad/logs/ws_gui.log", 'w')
                 f.write("websocket_gui=ready")
                 f.close()

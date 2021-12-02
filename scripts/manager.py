@@ -23,7 +23,7 @@ def check_device(device_path):
 
 RADI_VERSION = "3.1.14"
 DRI_PATH = "/dev/dri/card0"
-ACCELERATION_ENABLED = check_device(DRI_PATH)
+ACCELERATION_ENABLED = False #check_device(DRI_PATH)
 DRONE_EX = ["drone_cat_mouse", "follow_road", "follow_turtlebot", "labyrinth_escape", "position_control", "rescue_people", "drone_hangar", "drone_gymkhana", "visual_lander", "drone_cat_mouse_game"]
 CIRCUIT_EX = ["follow_line", "follow_line_game"]
 STDR_EX = ["laser_mapping", "laser_loc"]
@@ -164,17 +164,17 @@ class Commands:
         host_thread = DockerThread(host_cmd)
         host_thread.start()
         # Wait until websocket server is set up
-        # server_ready = False
-        # while not server_ready:
-        #     try:
-        #         f = open("/home/vlad/logs/ws_code.log", "r")
-        #         if f.readline() == "websocket_code=ready":
-        #             server_ready = True
-        #         f.close()
-        #         time.sleep(0.2)
-        #     except Exception as e: 
-        #         print("waiting for ws code server...")
-        #         time.sleep(0.2)
+        server_ready = False
+        while not server_ready:
+            try:
+                f = open("/home/vlad/logs/ws_code.log", "r")
+                if f.readline() == "websocket_code=ready":
+                    server_ready = True
+                f.close()
+                time.sleep(0.2)
+            except Exception as e: 
+                print("waiting for ws code server...")
+                time.sleep(0.2)
 
         try:
             gui_cmd = self.instructions[exercise]["instructions_gui"]
@@ -184,17 +184,17 @@ class Commands:
             gui_thread = DockerThread(gui_cmd)
             gui_thread.start()
             # Wait until websocket server is set up
-            # server_ready = False
-            # while not server_ready:
-            #     try:
-            #         f = open("/home/vlad/logs/ws_gui.log", "r")
-            #         if f.readline() == "websocket_gui=ready":
-            #             server_ready = True
-            #         f.close()
-            #         time.sleep(0.2)
-            #     except Exception as e: 
-            #         print("waiting for ws guest server...")
-            #         time.sleep(0.2)
+            server_ready = False
+            while not server_ready:
+                try:
+                    f = open("/home/vlad/logs/ws_gui.log", "r")
+                    if f.readline() == "websocket_gui=ready":
+                        server_ready = True
+                    f.close()
+                    time.sleep(0.2)
+                except Exception as e: 
+                    print("waiting for ws guest server...")
+                    time.sleep(0.2)
         except KeyError:
             pass
 
@@ -552,7 +552,7 @@ class Manager:
             self.commands.start_console(width, height)
             print("> Console started")
 
-        elif (exercise not in STDR_EX):
+        elif (exercise in STDR_EX):
             print("> Starting STDRServer")
             self.commands.start_stdrserver(exercise)
             print("> STDRServer started")

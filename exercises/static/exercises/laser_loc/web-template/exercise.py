@@ -380,17 +380,14 @@ class Template:
         print(client, 'closed')
     
     def run_server(self):
-        print("Hola soy run_server")
         self.server = WebsocketServer(port=1905, host=self.host)
         self.server.set_fn_new_client(self.connected)
         self.server.set_fn_client_left(self.handle_close)
         self.server.set_fn_message_received(self.handle)
 
         logged = False
-        print("Llega al exercise.py run_server")
         while not logged:
             try:
-                print("Intenta crear el archivo")
                 f = open("/home/vlad/logs/ws_code.log", "w")
                 f.write("websocket_code=ready")
                 f.close()
@@ -403,7 +400,5 @@ class Template:
 
 # Execute!
 if __name__ == "__main__":
-    print("Hola exercice.py")
     server = Template()
-    print("Ha ejecutado Template")
     server.run_server()
