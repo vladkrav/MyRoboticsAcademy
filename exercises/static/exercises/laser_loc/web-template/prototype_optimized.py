@@ -138,7 +138,7 @@ for i in range(num_particles):
     particles.append((round(x), round(y), yaw, wo, w_persist))
 # Mostrar por el GUI las particulas generadas.
 particles = np.array(particles).tolist()
-GUI.showParticles(particles)
+# GUI.showParticles(particles)
 Di = 729**2 + 729**2 + 1
 D_min = 729**2 + 729**2
 first_time = 0
@@ -375,12 +375,12 @@ while True:
         robot_pose_yaw = pos_actual_yaw
 
         # Se estima la posicion del robot
-        GUI.showParticles(particles)
+        # GUI.showParticles(particles)
         for i in range(num_particles):
             robot_x += particles[i][0] * particles[i][3] / sum_weight_particles
             robot_y += particles[i][1] * particles[i][3] / sum_weight_particles
             robot_yaw += particles[i][2] * particles[i][3] 
-        GUI.showEstimatedPose((robot_x, robot_y, robot_yaw))
+        # GUI.showEstimatedPose((robot_x, robot_y, robot_yaw))
         estimation_time = time() - (start_time + observation_time + vector_real_time + comparition_time + probability_time + resampling_time + movement_time)
         print("El tiempo de estimacion es:")
         print(estimation_time)

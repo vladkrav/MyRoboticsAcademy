@@ -1,5 +1,3 @@
-
-
 //Editor Part
 var editor = ace.edit("editor");
 editor.setTheme("ace/theme/monokai");
@@ -114,11 +112,11 @@ function guifrequencyUpdate(vol) {
 	document.querySelector('#gui_freq').value = vol;
 }
 function Teleoperation(){
-	var message = "#teop";
+	var message = "#teop"
 	teleop_switch = !teleop_switch;
 	change_teleop_img();
 	if (websocket_code != null)
-	websocket_code.send(message);
+	websocket_code.send(message)
 }
 function deactivateTeleop(){
 	if (teleop_switch)
@@ -130,4 +128,8 @@ function keyEvent(event){
 	message = message + key;
 	if (websocket_code != null)
 		websocket_code.send(message);
+}
+function displayText(text_msg){
+	HelpWindow = document.getElementById("switch-label");
+	HelpWindow.innerHTML = ArrayText[text_msg];
 }

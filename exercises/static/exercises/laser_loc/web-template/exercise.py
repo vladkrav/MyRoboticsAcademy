@@ -209,11 +209,8 @@ class Template:
     def generate_modules(self):
         # Define HAL module
         hal_module = imp.new_module("HAL")
-        # hal_module = types.ModuleType("HAL")
         hal_module.HAL = imp.new_module("HAL")
-        # hal_module.HAL = types.ModuleType("HAL")
         hal_module.HAL.motors = imp.new_module("motors")
-        # hal_module.HAL.motors = types.ModuleType("motors")
 
         # Add HAL functions
         hal_module.HAL.getPose3d = self.hal.pose3d.getPose3d
@@ -231,15 +228,13 @@ class Template:
         
         # Define GUI module
         gui_module = imp.new_module("GUI")
-        # gui_module = types.ModuleType("GUI")
-        # gui_module.GUI = types.ModuleType("GUI")
         gui_module.GUI = imp.new_module("GUI")
 
         # Add GUI functions
         gui_module.GUI.update = self.gui.update_gui
-        gui_module.GUI.showParticles = self.gui.showParticles
-        gui_module.GUI.showEstimatedPose = self.gui.showEstimatedPose
-        gui_module.GUI.showEstimatedLaser = self.gui.showEstimatedLaser
+        # gui_module.GUI.showParticles = self.gui.showParticles
+        # gui_module.GUI.showEstimatedPose = self.gui.showEstimatedPose
+        # gui_module.GUI.showEstimatedLaser = self.gui.showEstimatedLaser
 
         # Adding modules to system
         # Protip: The names should be different from
