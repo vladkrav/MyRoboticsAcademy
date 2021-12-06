@@ -7,7 +7,7 @@ from websocket_server import WebsocketServer
 import logging
 from interfaces.pose3d import ListenerPose3d
 from interfaces.laser import ListenerLaser
-
+from interfaces.sonar import ListenerSonar
 from map import Map
 
 # Graphical User Interface Class
@@ -85,8 +85,8 @@ class GUI:
     # Gets called when there is an incoming message from the client
     def get_message(self, client, server, message):
 		# Acknowledge Message for GUI Thread
-	    if(message[:4] == "#ack"):
-		    self.set_acknowledge(True)
+        if(message[:4] == "#ack"):
+            self.set_acknowledge(True)
     
     # Activate the server
     def run_server(self):
@@ -96,7 +96,7 @@ class GUI:
         logged = False
         while not logged:
             try:
-                f = open("/home/vlad/logs/ws_gui.log", 'w')
+                f = open("/home/vlad/logs/ws_gui.log", "w")
                 f.write("websocket_gui=ready")
                 f.close()
                 logged = True

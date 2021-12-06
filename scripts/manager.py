@@ -132,7 +132,7 @@ class Commands:
     def start_vnc(self, display, internal_port, external_port):
         if not (ACCELERATION_ENABLED):
             # Start VNC server without password, forever running in background
-            x11vnc_cmd = f"x11vnc -display {display} -nopw -forever -xkb -bg -rfbport {internal_port}"
+            x11vnc_cmd = f"x11vnc -display {display} -noxdamage -nopw -nowf -forever -xkb -bg -rfbport {internal_port}"
             x11vnc_thread = DockerThread(x11vnc_cmd)
             x11vnc_thread.start()
 

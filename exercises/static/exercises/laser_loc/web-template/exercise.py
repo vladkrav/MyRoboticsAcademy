@@ -13,7 +13,6 @@ import re
 import json
 import traceback
 import imp
-import types
 import importlib
 import rospy
 from std_srvs.srv import Empty
@@ -25,7 +24,7 @@ from console import start_console, close_console
 
 class Template:
     # Initialize class variables
-    # self.time_cycle to run an execution for atleast 1 second
+    # self.ideal_cycle to run an execution for atleast 1 second
     # self.process for the current running process
     def __init__(self):
         self.thread = None
@@ -85,7 +84,6 @@ class Template:
             return "", ""
             
         else:
-            # Get the frequency of operation, convert to time_cycle and strip
             sequential_code, iterative_code = self.seperate_seq_iter(source_code)
             return iterative_code, sequential_code
         
@@ -260,10 +258,10 @@ class Template:
             
             # Get the time period
             try:
-            	# Division by zero
-            	self.measured_cycle = ms / self.iteration_counter
+                # Division by zero
+                self.measured_cycle = ms / self.iteration_counter
             except:
-            	self.measured_cycle = 0
+                self.measured_cycle = 0
             
             # Reset the counter
             self.iteration_counter = 0
@@ -284,10 +282,10 @@ class Template:
             gui_frequency = round(1000 / self.thread_gui.measured_cycle, 1)
         except ZeroDivisionError:
             gui_frequency = 0
-
+        
         self.frequency_message["brain"] = brain_frequency
         self.frequency_message["gui"] = gui_frequency
-
+        
         message = "#freq" + json.dumps(self.frequency_message)
         self.server.send_message(self.client, message)
 

@@ -26,7 +26,7 @@ function declare_code(websocket_address){
 	websocket_code.onopen = function(event){
 		radiConect.contentWindow.postMessage({connection: 'exercise', command: 'launch_level', level: '5'}, '*');
 		if (websocket_gui.readyState == 1) {
-		alert("[open] Connection established!");
+			alert("[open] Connection established!");
 			radiConect.contentWindow.postMessage({connection: 'exercise', command: 'up'}, '*');
 		}
         websocket_code.send("#ping");
