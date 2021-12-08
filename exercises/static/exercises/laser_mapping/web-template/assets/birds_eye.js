@@ -138,7 +138,7 @@ function drawSonar(sonar_sensor_point, pos_vertices){
 	let py_sensor = [];
 	let j = 0;
 	let z = 0;
-	alert(`[close] Connection closed cleanly`);
+	// alert(`[close] Connection closed cleanly`);
 	for(let k of sonar_sensor_point){
 		px_sensor[j] = k[0];
 		py_sensor[j] = k[1];
@@ -161,7 +161,7 @@ function drawSonar(sonar_sensor_point, pos_vertices){
 	}
 }
 function drawAMCL(approximated_robot_pose, particles){
-	alert(`[close] Connection closed cleanly`);
+	// alert(`[close] Connection closed cleanly`);
 	for(let d of particles){
 		ctx.beginPath();
 		ctx.strokeStyle = "#000000";

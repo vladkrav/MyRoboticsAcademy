@@ -343,9 +343,42 @@ while True:
         print("El tiempo de resampleo es:")
         print(resampling_time)
         for i, particle in enumerate(array_resampled):
-            particle[0][0] = particle[0][0] + math.cos(particle[0][2])*xr - math.sin(particle[0][2])*yr
-            particle[0][1] = particle[0][1] + math.sin(particle[0][2])*xr + math.cos(particle[0][2])*yr
-            particle[0][2] = particle[0][2] + move_yaw
+            if(0 <= abs(particle[0][2]) < math.pi/2):
+                particle[0][0] = particle[0][0] + move_x
+                particle[0][1] = particle[0][1] + move_y
+                particle[0][2] = particle[0][2] + move_yaw
+                while(particle[0][2] < 0):
+                    particle[0][2] = math.pi*2 + particle[0][2]
+                while(particle[0][2] > math.pi*2):
+                    particle[0][2] = particle[0][2] - math.pi*2
+
+            elif(math.pi/2 <= abs(particle[0][2]) < math.pi):
+                particle[0][0] = particle[0][0] - move_x
+                particle[0][1] = particle[0][1] + move_y
+                particle[0][2] = particle[0][2] + move_yaw
+                while(particle[0][2] < 0):
+                    particle[0][2] = math.pi*2 + particle[0][2]
+                while(particle[0][2] > math.pi*2):
+                    particle[0][2] = particle[0][2] - math.pi*2
+
+            elif(math.pi <= abs(particle[0][2]) < 3*math.pi/2):
+                particle[0][0] = particle[0][0] - move_x
+                particle[0][1] = particle[0][1] - move_y
+                particle[0][2] = particle[0][2] + move_yaw
+                while(particle[0][2] < 0):
+                    particle[0][2] = math.pi*2 + particle[0][2]
+                while(particle[0][2] > math.pi*2):
+                    particle[0][2] = particle[0][2] - math.pi*2
+
+            elif(abs(particle[0][2]) >= 3*math.pi/2):
+                particle[0][0] = particle[0][0] + move_x
+                particle[0][1] = particle[0][1] - move_y
+                particle[0][2] = particle[0][2] + move_yaw
+                while(particle[0][2] < 0):
+                    particle[0][2] = math.pi*2 + particle[0][2]
+                while(particle[0][2] > math.pi*2):
+                    particle[0][2] = particle[0][2] - math.pi*2
+
             # Si la particula no esta dentro del rango del mapa o la probabilidad es menor que un determinado valor:
             if ((particle[0][0]<x_min or particle[0][0]>x_max) or (particle[0][1]<y_min or particle[0][1]>y_max) or (particle[0][3]<0.1*(1/num_particles))):
                 # Se remuestrea la particula alrededor de la particula con mayor peso
