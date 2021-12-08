@@ -6,6 +6,7 @@ var mapCanvas = document.getElementById("birds-eye"),
 var trail = [],
 	coords = [-1, -1];
 var resolution = 1;
+var estimated_laser = [[0,0,0,0,0],[0]]
 // Complete draw function
 function draw(pos, contorno, laser_data, sonar_sensor_point, pos_vertices, laser_global,
 	approximated_robot_pose, particles, estimated_laser){
@@ -209,17 +210,17 @@ function drawAMCL(approximated_robot_pose, particles){
 	ctx.fill();
 	ctx.closePath();
 }
-function drawEstimatedLaser(estimated_laser){
-	var j = 0;
-	for(let d of estimated_laser[0]){
-		for(let i = 0; i < 5; i++){
-			ctx.beginPath();
-			ctx.strokeStyle = "#002AFE";
-			ctx.moveTo(d[0], 729 - d[1]);
-			ctx.lineTo(estimated_laser[1][j][i][0], 729 - estimated_laser[1][j][i][1]);
-			ctx.stroke();
-			ctx.closePath();
-		}
-		j = j + 1;
-	}
-}
+// function drawEstimatedLaser(estimated_laser){
+// 	var j = 0;
+// 	for(let d of estimated_laser[0]){
+// 		for(let i = 0; i < 5; i++){
+// 			ctx.beginPath();
+// 			ctx.strokeStyle = "#002AFE";
+// 			ctx.moveTo(d[0], 729 - d[1]);
+// 			ctx.lineTo(estimated_laser[1][j][i][0], 729 - estimated_laser[1][j][i][1]);
+// 			ctx.stroke();
+// 			ctx.closePath();
+// 		}
+// 		j = j + 1;
+// 	}
+// }

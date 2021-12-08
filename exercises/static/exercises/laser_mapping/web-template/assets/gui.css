@@ -31,13 +31,13 @@
     width: 769px;
 }
 
-#mapping{
+/* #mapping{
     margin-top: 15px;
-    background: #808080;
+    background: #fdffff;
     background-size: cover;
     height: 500px;
     width: 500px;
-}
+} */
 
 .popup{
     position: relative;

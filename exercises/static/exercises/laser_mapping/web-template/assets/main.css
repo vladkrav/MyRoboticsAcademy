@@ -1,8 +1,8 @@
 
 #right{
-  padding-left:1px;
-  padding-top:5px;
-  background-color: #ddd;
+padding-left:1px;
+padding-top:5px;
+background-color: #ddd;
 }
 
 time{
@@ -10,7 +10,7 @@ time{
 }
 
 #visual_buttons{
-  margin-left: inherit;
+margin-left: inherit;
 }
 
 #editor{
@@ -45,15 +45,15 @@ time{
 
 #Control{
     vertical-align:middle;
-      text-align:center;  
-      display: -ms-grid;
-      display: grid;
-      -ms-grid-template-columns: repeat(15, 1fr);
-      grid-template-columns: repeat(15, 1fr);
-      width: 100%;
-      margin: 15px auto;
-      margin-left: 80px;   
-  }
+    text-align:center;  
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-template-columns: repeat(15, 1fr);
+    grid-template-columns: repeat(15, 1fr);
+    width: 100%;
+    margin: 15px auto;
+    margin-left: 80px;   
+}
 .btn_img{
     height: 25px;
 }
@@ -124,7 +124,7 @@ img{
     border: none;
     background-color: whitesmoke;
     margin-right: 10px;
-  }
+}
 
 #teleop_button{
     font-size: 12px;
@@ -133,7 +133,7 @@ img{
     border: none;
     background-color: whitesmoke;
     margin-right: 10px;
-  }
+}
 
 #reset:hover, #submit:hover, #load:hover, #stop:hover, #save:hover, #console_button:hover, #gazebo_button:hover, #teleop:hover{
     border: 1.5px solid transparent;
@@ -142,22 +142,6 @@ img{
     border-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
     border-image-slice: 1;
 }
-
-/* #gzweb_btn{
-    margin-left: 10%;
-    width: 80px;
-    height: 45px;
-    border:1 solid whitesmoke;
-    background-color: white;
-}
-
-#gzweb_btn:hover{
-    border: 2px solid transparent;
-    -moz-border-image: -moz-linear-gradient(bottom, whitesmoke 0%, #000 100%);
-    -webkit-border-image: -webkit-linear-gradient(bottom, whitesmoke 0%, #000 100%);
-    border-image: linear-gradient(to bottom, whitesmoke 0%,  #000 100%);
-    border-image-slice: 1;
-} */
 
 #console_btn{
     font-size: 10px;
@@ -176,6 +160,7 @@ img{
     border-image: linear-gradient(to bottom, whitesmoke 0%,  #000 100%);
     border-image-slice: 1;
 }
+/*
 #mapping_btn{
     font-size: 10px;
     width: 80px;
@@ -184,6 +169,8 @@ img{
     background-color: white;
     margin-left: 10px;
 }
+*/
+/*
 #mapping_btn:hover{
     border: 2px solid transparent;
     -moz-border-image: -moz-linear-gradient(bottom, whitesmoke 0%, #000 100%);
@@ -191,7 +178,7 @@ img{
     border-image: linear-gradient(to bottom, whitesmoke 0%, #000 100%);
     border-image-slice: 1;
 }
-
+*/
 #terminalimg {
     float: left;
     height: 20px;
@@ -213,49 +200,49 @@ th, td{
     padding-left: 0px;
 }
 #frecuency_control{
-  margin-left: 5%;
+margin-left: 5%;
 }
 
 .debug{
- padding-left: 7%;
+padding-left: 7%;
 }
 
 
 input[type=number]{
     width: 40px;
     background-color: whitesmoke;
-  }
-  input[type=number]::-webkit-inner-spin-button {
+}
+input[type=number]::-webkit-inner-spin-button {
     opacity: 1;
-  }
-  
-  #code_freq, #gui_freq, #sim_rtf{
+}
+
+#code_freq, #gui_freq, #sim_rtf{
     height: 40px;
     border:none;
-  }
-  
-  #table_code_freq, #table_gui_freq{
+}
+
+#table_code_freq, #table_gui_freq{
     height:40px;
     width:210px;
     margin-right:30px;
-  }
-  
-  #ideal_code_frequency, #code_frequency{
+}
+
+#ideal_code_frequency, #code_frequency{
     display:inline-block;
     margin-right:10px;
     white-space: pre-wrap;
-  }
-  
-  #Medidor_Brain{
+}
+
+#Medidor_Brain{
     width:210px;
     height:42px;
     background-color: whitesmoke;
     margin-right:10px;
-  }
-  
-  #Medidor_GUI{
+}
+
+#Medidor_GUI{
     width:190px;
     height:42px;
     background-color: whitesmoke;
     margin-right:50px;
-  }
+}

@@ -4,4 +4,4 @@ from hal import HAL
 
 
 # Enter iterative code!
-        
+GUI.update()

@@ -8,7 +8,6 @@ import logging
 from interfaces.pose3d import ListenerPose3d
 from interfaces.laser import ListenerLaser
 from interfaces.sonar import ListenerSonar
-
 from map import Map
 
 # Graphical User Interface Class
@@ -25,8 +24,10 @@ class GUI:
             'sonar_sensor': '',
             'pos_vertices': '',
             'laser_global': '',
-            'EnableMapping': ''
-            }
+            'EnableMapping': '',
+            'approximated_robot_pose': '',
+            'particles': ''
+        }
         self.server = None
         self.client = None
         
@@ -47,7 +48,6 @@ class GUI:
     # Class method, so user can call it without instantiation
     @classmethod
     def initGUI(cls, host, console):
-        # self.payload = {'image': '', 'shape': []}
         new_instance = cls(host, console)
         return new_instance
 
@@ -84,7 +84,7 @@ class GUI:
     # Function to read the message from websocket
     # Gets called when there is an incoming message from the client
     def get_message(self, client, server, message):
-        # Acknowledge Message for GUI Thread
+		# Acknowledge Message for GUI Thread
         if(message[:4] == "#ack"):
             self.set_acknowledge(True)
     
@@ -102,12 +102,28 @@ class GUI:
                 logged = True
             except:
                 time.sleep(0.1)
-                
+
         self.server.run_forever()
 
     # Function to reset
     def reset_gui(self):
         self.map.reset()
+
+    # Function to show particles
+    def showParticles(self, particles):
+        self.payload["particles"] = particles
+        message = "#gui" + json.dumps(self.payload)
+        self.server.send_message(self.client, message)
+
+    def showEstimatedPose(self, pose):
+        self.payload["approximated_robot_pose"] = pose
+        message = "#gui" + json.dumps(self.payload)
+        self.server.send_message(self.client, message)
+    
+    # def showEstimatedLaser(self, laser):
+    #     self.payload["estimated_laser"] = laser
+    #     message = "#gui" + json.dumps(self.payload)
+    #     self.server.send_message(self.client, message)
         
 
 # This class decouples the user thread
@@ -161,7 +177,7 @@ class ThreadGUI:
     def run(self):
         while(self.gui.client == None):
             pass
-    
+        
         while(True):
             start_time = datetime.now()
             self.gui.update_gui()
@@ -169,7 +185,7 @@ class ThreadGUI:
             
             while(acknowledge_message == False):
                 acknowledge_message = self.gui.get_acknowledge()
-                
+            
             self.gui.set_acknowledge(False)
             
             finish_time = datetime.now()

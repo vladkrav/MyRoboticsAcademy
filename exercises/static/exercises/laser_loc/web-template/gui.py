@@ -110,20 +110,20 @@ class GUI:
         self.map.reset()
 
     #Function to show particles
-    # def showParticles(self, particles):
-    #     self.payload["particles"] = str(particles)
-    #     message = "#gui" + json.dumps(self.payload)
-    #     self.server.send_message(self.client, message)
+    def showParticles(self, particles):
+        self.payload["particles"] = str(particles)
+        message = "#gui" + json.dumps(self.payload)
+        self.server.send_message(self.client, message)
 
-    # def showEstimatedPose(self, pose):
-    #     self.payload["approximated_robot_pose"] = str(pose)
-    #     message = "#gui" + json.dumps(self.payload)
-    #     self.server.send_message(self.client, message)
+    def showEstimatedPose(self, pose):
+        self.payload["approximated_robot_pose"] = str(pose)
+        message = "#gui" + json.dumps(self.payload)
+        self.server.send_message(self.client, message)
     
-    # def showEstimatedLaser(self, laser):
-    #     self.payload["estimated_laser"] = str(laser)
-    #     message = "#gui" + json.dumps(self.payload)
-    #     self.server.send_message(self.client, message)
+    def showEstimatedLaser(self, laser):
+        self.payload["estimated_laser"] = str(laser)
+        message = "#gui" + json.dumps(self.payload)
+        self.server.send_message(self.client, message)
         
 
 # This class decouples the user thread

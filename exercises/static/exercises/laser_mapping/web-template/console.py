@@ -1,4 +1,3 @@
-# Functions to start and close console
 import os	
 import sys	
 
@@ -16,3 +15,5 @@ def close_console():
 	sys.stderr.close()
 	sys.stdout.close()
 	sys.stdin.close()
+		
+	

@@ -14,7 +14,6 @@ import json
 import traceback
 import imp
 import importlib
-
 import rospy
 from std_srvs.srv import Empty
 import cv2
@@ -58,8 +57,8 @@ class Template:
     def save_code(self, source_code):
         with open('code/academy.py', 'w') as code_file:
             code_file.write(source_code)
-    
-    # Function for loading        
+      
+    # Function for loading		
     def load_code(self):
         with open('code/academy.py', 'r') as code_file:
             source_code = code_file.read()
@@ -70,7 +69,7 @@ class Template:
     # A few assumptions: 
     # 1. The user always passes sequential and iterative codes
     # 2. Only a single infinite loop
-    def parse_code(self, source_code):            
+    def parse_code(self, source_code):
         # Check for save/load
         if(source_code[:5] == "#save"):
             source_code = source_code[5:]
@@ -81,9 +80,9 @@ class Template:
         elif(source_code[:5] == "#load"):
             source_code = source_code + self.load_code()
             self.server.send_message(self.client, source_code)
-    
+            
             return "", ""
- 
+            
         else:
             sequential_code, iterative_code = self.seperate_seq_iter(source_code)
             return iterative_code, sequential_code
@@ -100,7 +99,7 @@ class Template:
     def seperate_seq_iter(self, source_code):
         if source_code == "":
             return "", ""
-
+        
         # Search for an instance of while True
         infinite_loop = re.search(r'[^ ]while\s*\(\s*True\s*\)\s*:|[^ ]while\s*True\s*:|[^ ]while\s*1\s*:|[^ ]while\s*\(\s*1\s*\)\s*:', source_code)
 
@@ -159,13 +158,9 @@ class Template:
     def process_code(self, source_code):
         # Redirect the information to console
         start_console()
-
+        
         # Reference Environment for the exec() function
         iterative_code, sequential_code = self.parse_code(source_code)
-        
-        # print("The debug level is " + str(debug_level)
-        # print(sequential_code)
-        # print(iterative_code)
 
         # Whatever the code is, first step is to just stop!
         self.hal.motors.sendV(0)
@@ -204,10 +199,10 @@ class Template:
             # If it's more no problem as such, but we can change it!
             if(ms < self.ideal_cycle):
                 time.sleep((self.ideal_cycle - ms) / 1000.0)
-
+                
         close_console()
         print("Current Thread Joined!")
-
+        
     # Function to generate the modules for use in ACE Editor
     def generate_modules(self):
         # Define HAL module
@@ -235,6 +230,9 @@ class Template:
 
         # Add GUI functions
         gui_module.GUI.update = self.gui.update_gui
+        gui_module.GUI.showParticles = self.gui.showParticles
+        gui_module.GUI.showEstimatedPose = self.gui.showEstimatedPose
+        # gui_module.GUI.showEstimatedLaser = self.gui.showEstimatedLaser
 
         # Adding modules to system
         # Protip: The names should be different from
@@ -284,10 +282,10 @@ class Template:
             gui_frequency = round(1000 / self.thread_gui.measured_cycle, 1)
         except ZeroDivisionError:
             gui_frequency = 0
-
+        
         self.frequency_message["brain"] = brain_frequency
         self.frequency_message["gui"] = gui_frequency
-
+        
         message = "#freq" + json.dumps(self.frequency_message)
         self.server.send_message(self.client, message)
 
@@ -364,22 +362,22 @@ class Template:
         # Start the GUI update thread
         self.thread_gui = ThreadGUI(self.gui)
         self.thread_gui.start()
-
+        
         # Initialize the ping message
         self.send_frequency_message()
         
         print(client, 'connected')
-        
+    	
     # Function that gets called when the connected closes
     def handle_close(self, client, server):
         print(client, 'closed')
-        
+    
     def run_server(self):
         self.server = WebsocketServer(port=1905, host=self.host)
         self.server.set_fn_new_client(self.connected)
         self.server.set_fn_client_left(self.handle_close)
         self.server.set_fn_message_received(self.handle)
-        
+
         logged = False
         while not logged:
             try:
