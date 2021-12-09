@@ -153,7 +153,7 @@ while True:
     distance_yaw_control = abs(robot_pose_yaw - actual_pose_yaw)
     GUI.update()
     # if(distance_control >= 0.5 or distance_yaw_control >= math.pi/6 or first_time == 0):
-    if(distance_control >= 0.5 or distance_yaw_control >= math.pi/6):
+    if(distance_control >= 0.5/0.03 or distance_yaw_control >= math.pi/6):
         start_time = time()
         first_time = 1
         # Etapa de observacion. Obtencion de las medidas de la observacion
@@ -408,8 +408,8 @@ while True:
         # Se estima la posicion del robot
         GUI.showParticles(particles)
         for i in range(num_particles):
-            robot_x += particles[i][0] * particles[i][3] / sum_weight_particles
-            robot_y += particles[i][1] * particles[i][3] / sum_weight_particles
+            robot_x += particles[i][0] * particles[i][3] / 1 #sum_weight_particles
+            robot_y += particles[i][1] * particles[i][3] / 1 #sum_weight_particles
             robot_yaw += particles[i][2] * particles[i][3]
         GUI.showEstimatedPose((robot_x, robot_y, robot_yaw))
         estimation_time = time() - (start_time + observation_time + vector_real_time + comparition_time + probability_time + resampling_time + movement_time)
