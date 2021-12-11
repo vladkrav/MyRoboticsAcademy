@@ -115,7 +115,9 @@ while(robot_pose_yaw < 0):
     robot_pose_yaw = math.pi*2 + robot_pose_yaw
 while(robot_pose_yaw > math.pi*2):
     robot_pose_yaw = robot_pose_yaw - math.pi*2
-
+num_rayos = 10
+ray_multiplier = math.ceil(2*math.pi/(num_rayos * angleincrement))
+print("Ray_multiplier es:", ray_multiplier)
 # Incertidumbre de la posicion incial
 var_x = 10
 var_y = 10
@@ -171,7 +173,7 @@ while True:
         pnt_impacto = []
         aux = True
         for z, particle in enumerate(particles):
-            while(ang_iter < 5): # Debe haber 5 rayos en cada particula
+            while(ang_iter < num_rayos): # Debe haber 5 rayos en cada particula
                 xr = math.cos(angle)*distance
                 yr = math.sin(angle)*distance
                 # Se podria introducir la comprobacion de si la "x" o la "y" son negativas
@@ -217,7 +219,7 @@ while True:
                     pnt_impacto = np.array((round(px), round(py))).tolist()
                     manhattan = abs(round(particle[0] - pnt_impacto[0])) + abs(round(particle[0] - pnt_impacto[1]))
                     vector_teorico[z].append((manhattan))
-                angle = angle + angleincrement * 80
+                angle = angle + angleincrement * ray_multiplier
                 Di = 729**2 + 729**2 + 1
                 D_min = 729**2 + 729**2
                 ang_iter += 1
@@ -229,20 +231,22 @@ while True:
 
         # Obtencion del vector real con distancias manhattan
         vector_real = []
-        for i in range(0, 400, 80):
-            if(laser_rays.values[i] == float("-inf") or laser_rays.values[i] == float("inf")):
+        # for i in range(0, 400, 80):
+        for i in range(num_rayos):
+            k = int(i * 400 / num_rayos)
+            if(laser_rays.values[k] == float("-inf") or laser_rays.values[k] == float("inf")):
                 xr = math.cos(angle_real) * 8
                 yr = math.cos(angle_real) * 8
             else:
-                xr = math.cos(angle_real) * laser_rays.values[i] / 0.03
-                yr = math.cos(angle_real) * laser_rays.values[i] / 0.03
+                xr = math.cos(angle_real) * laser_rays.values[k] / 0.03
+                yr = math.cos(angle_real) * laser_rays.values[k] / 0.03
 
             x = posx + math.cos(actual_pose_yaw) * xr - math.sin(actual_pose_yaw) * yr
             y = posy + math.sin(actual_pose_yaw) * xr + math.cos(actual_pose_yaw) * yr
 
             manhattan = round((abs(posx - x) + abs(posy - y)))
             vector_real.append((manhattan))
-            angle_real = angle_real + angleincrement * 80 # Debe haber 5 rayos en cada particula
+            angle_real = angle_real + angleincrement * ray_multiplier # Debe haber 5 rayos en cada particula
             while(angle_real < 0):
                 angle_real = math.pi*2 + angle_real
             while(angle_real > math.pi*2):
@@ -259,6 +263,7 @@ while True:
                 dif = abs(dist - vector_real[j])
                 distancia[v].append((dif * 0.03)) # Diferencia en metros
             v = v + 1
+        print("Distancia:", distancia)
         comparition_time = time() - (start_time + observation_time + vector_real_time)
         print("El tiempo de comparacion es:")
         print(comparition_time)
@@ -270,11 +275,14 @@ while True:
             exponente = np.sum(np.array(element))
             prob = math.e **(-exponente)
             array_prob.append((prob))
+        print("El array de probabilidades:",array_prob)
         # print(prob)
         # print(array_prob)
         normalizers = np.sum(array_prob)
+        print("La normalización vale:", normalizers)
         # print(normalizers)
         array_prob = array_prob / normalizers
+        print("El array normalizado vale:",array_prob)
         # print(array_prob)
         for i, probability in enumerate(array_prob):
             particles[i][3] = probability
@@ -291,21 +299,21 @@ while True:
         iteracion = 0
         greater_particles = []
         less_particles = []
-        for i, particle in enumerate(particles): # De todas las particulas 
-            if(particle[3]>0.3*np.max(np.array(particles)[:][:,3])): # Si la probabilidad de la particula es mayor que un determinado umbral:
-                greater_particles.append((particle,i)) # Entonces se almacena en las particulas que son mayores que un determinado umbral.
-            elif(particle[3]<=0.3*np.max(np.array(particles)[:][:,3])): # Si la probabilidad es menor que un determinado umbral:
-                less_particles.append((particle,i)) # Se almacena en las particulas que son menores que un determinado umbral.
+        # for i, particle in enumerate(particles): # De todas las particulas 
+        #     if(particle[3]>0.3*np.max(np.array(particles)[:][:,3])): # Si la probabilidad de la particula es mayor que un determinado umbral:
+        #         greater_particles.append((particle,i)) # Entonces se almacena en las particulas que son mayores que un determinado umbral.
+        #     elif(particle[3]<=0.3*np.max(np.array(particles)[:][:,3])): # Si la probabilidad es menor que un determinado umbral:
+        #         less_particles.append((particle,i)) # Se almacena en las particulas que son menores que un determinado umbral.
 
-        while (iteracion < 0.9*np.array(greater_particles).size): # Mientras no se coja una cantidad determinada random de particulas mayores que un determinado umbral.
-            particle_resampled = random.choice(greater_particles)
-            array_resampled.append((particle_resampled))
-            iteracion += 1
-        iteracion = 0
-        while (iteracion < 0.1 * np.array(less_particles).size): # Mientras no se coja una cantidad determinada random de particulas menores que un determinado umbral.
-            particle_resampled = random.choice(less_particles)
-            array_resampled.append((particle_resampled))
-            iteracion += 1
+        # while ((iteracion < 0.9*np.array(greater_particles).size) and len(array_resampled) <= num_particles - 1): # Mientras no se coja una cantidad determinada random de particulas mayores que un determinado umbral.
+        #     particle_resampled = random.choice(greater_particles)
+        #     array_resampled.append((particle_resampled))
+        #     iteracion += 1
+        # iteracion = 0
+        # while ((iteracion < 0.1 * np.array(less_particles).size) and len(array_resampled) <= num_particles - 1): # Mientras no se coja una cantidad determinada random de particulas menores que un determinado umbral.
+        #     particle_resampled = random.choice(less_particles)
+        #     array_resampled.append((particle_resampled))
+        #     iteracion += 1
         ############################################################################
         ############################################################################
         ############################################################################
@@ -316,10 +324,11 @@ while True:
             d_x = abs(posx - robot_pose_x)
             angulo = math.acos(d_x/h)
         
-            xr = math.cos(angulo)*h
-            yr = math.sin(angulo)*h
+            xr = math.cos(0)*h
+            yr = math.sin(0)*h
         else:
-            pass
+            xr = 0
+            yr = 0
         
         # particle[0][0] = particle[0][0] + math.cos(particle[0][2])*xr - math.sin(particle[0][2])*yr
         # particle[0][1] = particle[0][1] + math.sin(particle[0][2])*xr + math.cos(particle[0][2])*yr
@@ -335,52 +344,68 @@ while True:
         
         # Se aplica el movimiento calculado a las particulas
         # Dependiendo de como este orientada la particula, se aplica un movimiento u otro
-        array_resampled = np.array(array_resampled).tolist()
+        # array_resampled = np.array(array_resampled).tolist()
+        # array_resampled = particles
         v_x = 0
         v_y = 0
         sum_weight_particles = 0
         resampling_time = time() - (start_time + observation_time + vector_real_time + comparition_time + probability_time)
         print("El tiempo de resampleo es:")
         print(resampling_time)
-        for i, particle in enumerate(array_resampled):
-            if(0 <= abs(particle[0][2]) < math.pi/2):
-                particle[0][0] = particle[0][0] + move_x
-                particle[0][1] = particle[0][1] + move_y
-                particle[0][2] = particle[0][2] + move_yaw
-                while(particle[0][2] < 0):
-                    particle[0][2] = math.pi*2 + particle[0][2]
-                while(particle[0][2] > math.pi*2):
-                    particle[0][2] = particle[0][2] - math.pi*2
+        for i, particle in enumerate(particles):
+            # print("La particula es:", particle)
+            # print("El array remuestreado es:", particles)
+            # print("Particulas pre:",particle[0][0],particle[0][1],particle[0][2])
+            # particle[0][0] = round(particle[0][0] + math.cos(particle[0][2])*xr - math.sin(particle[0][2])*yr)
+            # particle[0][1] = round(particle[0][1] + math.sin(particle[0][2])*xr + math.cos(particle[0][2])*yr)
+            # particle[0][2] = particle[0][2] + move_yaw
+            # print("Particulas post:",particle[0][0],particle[0][1],particle[0][2])
+            print("La particula es:", particle)
+            print("El array remuestreado es:", particles)
+            print("Particulas pre:",particle[0],particle[1],particle[2])
+            particle[0] = round(particle[0] + math.cos(particle[2])*xr - math.sin(particle[2])*yr)
+            particle[1] = round(particle[1] + math.sin(particle[2])*xr + math.cos(particle[2])*yr)
+            particle[2] = particle[2] + move_yaw
+            print("Particulas post:",particle[0],particle[1],particle[2])
+            # if(0 <= abs(particle[0][2]) < math.pi/2):
+            #     particle[0][0] = particle[0][0] + move_x
+            #     particle[0][1] = particle[0][1] + move_y
+            #     particle[0][2] = particle[0][2] + move_yaw
+            #     while(particle[0][2] < 0):
+            #         particle[0][2] = math.pi*2 + particle[0][2]
+            #     while(particle[0][2] > math.pi*2):
+            #         particle[0][2] = particle[0][2] - math.pi*2
 
-            elif(math.pi/2 <= abs(particle[0][2]) < math.pi):
-                particle[0][0] = particle[0][0] - move_x
-                particle[0][1] = particle[0][1] + move_y
-                particle[0][2] = particle[0][2] + move_yaw
-                while(particle[0][2] < 0):
-                    particle[0][2] = math.pi*2 + particle[0][2]
-                while(particle[0][2] > math.pi*2):
-                    particle[0][2] = particle[0][2] - math.pi*2
+            # elif(math.pi/2 <= abs(particle[0][2]) < math.pi):
+            #     particle[0][0] = particle[0][0] - move_x
+            #     particle[0][1] = particle[0][1] + move_y
+            #     particle[0][2] = particle[0][2] + move_yaw
+            #     while(particle[0][2] < 0):
+            #         particle[0][2] = math.pi*2 + particle[0][2]
+            #     while(particle[0][2] > math.pi*2):
+            #         particle[0][2] = particle[0][2] - math.pi*2
 
-            elif(math.pi <= abs(particle[0][2]) < 3*math.pi/2):
-                particle[0][0] = particle[0][0] - move_x
-                particle[0][1] = particle[0][1] - move_y
-                particle[0][2] = particle[0][2] + move_yaw
-                while(particle[0][2] < 0):
-                    particle[0][2] = math.pi*2 + particle[0][2]
-                while(particle[0][2] > math.pi*2):
-                    particle[0][2] = particle[0][2] - math.pi*2
+            # elif(math.pi <= abs(particle[0][2]) < 3*math.pi/2):
+            #     particle[0][0] = particle[0][0] - move_x
+            #     particle[0][1] = particle[0][1] - move_y
+            #     particle[0][2] = particle[0][2] + move_yaw
+            #     while(particle[0][2] < 0):
+            #         particle[0][2] = math.pi*2 + particle[0][2]
+            #     while(particle[0][2] > math.pi*2):
+            #         particle[0][2] = particle[0][2] - math.pi*2
 
-            elif(abs(particle[0][2]) >= 3*math.pi/2):
-                particle[0][0] = particle[0][0] + move_x
-                particle[0][1] = particle[0][1] - move_y
-                particle[0][2] = particle[0][2] + move_yaw
-                while(particle[0][2] < 0):
-                    particle[0][2] = math.pi*2 + particle[0][2]
-                while(particle[0][2] > math.pi*2):
-                    particle[0][2] = particle[0][2] - math.pi*2
+            # elif(abs(particle[0][2]) >= 3*math.pi/2):
+            #     particle[0][0] = particle[0][0] + move_x
+            #     particle[0][1] = particle[0][1] - move_y
+            #     particle[0][2] = particle[0][2] + move_yaw
+            #     while(particle[0][2] < 0):
+            #         particle[0][2] = math.pi*2 + particle[0][2]
+            #     while(particle[0][2] > math.pi*2):
+            #         particle[0][2] = particle[0][2] - math.pi*2
 
             # Si la particula no esta dentro del rango del mapa o la probabilidad es menor que un determinado valor:
-            if ((particle[0][0]<x_min or particle[0][0]>x_max) or (particle[0][1]<y_min or particle[0][1]>y_max) or (particle[0][3]<0.1*(1/num_particles))):
+            # if ((particle[0][0]<x_min or particle[0][0]>x_max) or (particle[0][1]<y_min or particle[0][1]>y_max) or (particle[0][3]<0.1*(1/num_particles))):
+            if ((particle[0]<x_min or particle[0]>x_max) or (particle[1]<y_min or particle[1]>y_max)):
                 # Se remuestrea la particula alrededor de la particula con mayor peso
                 index = np.argmax(np.array(particles)[:][:,3])
                 x = np.random.normal(particles[index][0], v_x)
@@ -390,13 +415,16 @@ while True:
                     yaw = math.pi*2 + yaw
                 while(yaw > math.pi*2):
                     yaw = yaw - math.pi*2
-                particle[0][0] = round(x)
-                particle[0][1] = round(y)
-                particle[0][2] = yaw
-            particles[particle[1]] = particle[0]
+                # particle[0][0] = round(x)
+                # particle[0][1] = round(y)
+                # particle[0][2] = yaw
+                particle[0] = round(x)
+                particle[1] = round(y)
+                particle[2] = yaw
+            # particles[particle[1]] = particle[0]
 
             # Sumatorio de los pesos de las particulas que se han considerado en esa iteracion
-            sum_weight_particles += particle[0][3]
+            sum_weight_particles += particle[3]
         movement_time = time() - (start_time + observation_time + vector_real_time + comparition_time + probability_time + resampling_time)
         print("El tiempo de movimiento es:")
         print(movement_time)
@@ -425,3 +453,5 @@ while True:
         elapsed_time = time() - start_time
         print("El codigo ha tardado:")
         print(elapsed_time)
+        print("")
+        print("")
