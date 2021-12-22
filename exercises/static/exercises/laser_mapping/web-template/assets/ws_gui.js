@@ -1,3 +1,4 @@
+
 var enable_flag = 0;
 // To decode the image string we will receive from server
 function decode_utf8(s){
@@ -32,10 +33,11 @@ function declare_gui(websocket_address){
 		var operation = event.data.substring(0, 4); /*Devuelve un subconunto de un objeto String*/
 		
 		if(operation == "#gui"){
+			//console.log(event.data.substring(4, ));
 			// Parse the entire Object
 			/*Analiza una cadena de texto como JSON, transformando opcionalmente el valor producido por el analisis */
-			// var data = JSON.parse(event.data.substring(4, ));
 			var data;
+			// Nan and infinity json errors
 			try {
 				data = JSON.parse(event.data.substring(4, ));
 			} catch (e)
@@ -49,17 +51,25 @@ function declare_gui(websocket_address){
 				json_data = json_data.replace(regex3, '0');
 				data = JSON.parse(json_data);
 			}
+			// var pose = data.map.substring(1, data.map.length - 1);
+			// var content = pose.split(',').map(function(item) {
+			// 	return parseFloat(item);
+			// })
 			var robot_coord = data.robot_coord;
 			var robot_cont = data.robot_contorno;
 			var laser_data = data.laser;
 			var laser_global = data.laser_global;
 			var sonar_sensor_point = data.sonar_sensor;
 			var pos_vertices = data.pos_vertices;
-			var approximated_robot_pose = data.approximated_robot_pose;
-			var particles = data.particles;
-			var estimated_laser = data.estimated_laser;
 			/*Draw all*/
-			draw(robot_coord, robot_cont, laser_data, sonar_sensor_point, pos_vertices, laser_global, approximated_robot_pose, particles, estimated_laser);
+			draw(robot_coord, robot_cont, laser_data, sonar_sensor_point, pos_vertices, laser_global);
+			/*If enabled draw the mapping*/
+			if(enable_flag == 1){
+				drawMapping(laser_data, robot_coord);
+			}
+			else{
+				enable_flag = 0;
+			}
 
 			// Send the Acknowledgment Message
 			websocket_gui.send("#ack");
@@ -77,6 +87,7 @@ function declare_gui(websocket_address){
 		
 	}
 }
+
 function changemapping(){
 	var mapping_display = document.getElementById("mapping").style.display
 	console.log(mapping_display)

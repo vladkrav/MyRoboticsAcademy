@@ -51,22 +51,22 @@ class HAL:
         return self.sonar_0.getSonarData()
 
     def getSonarData_1(self):
-        return self.sonar_1.getSonarData()
+        return self.sonar_0.getSonarData()
 
     def getSonarData_2(self):
-        return self.sonar_2.getSonarData()
+        return self.sonar_0.getSonarData()
 
     def getSonarData_3(self):
-        return self.sonar_3.getSonarData()
+        return self.sonar_0.getSonarData()
 
     def getSonarData_4(self):
-        return self.sonar_4.getSonarData()
+        return self.sonar_0.getSonarData()
 
     def getSonarData_5(self):
-        return self.sonar_5.getSonarData()
+        return self.sonar_0.getSonarData()
 
     def getSonarData_6(self):
-        return self.sonar_6.getSonarData()
+        return self.sonar_0.getSonarData()
 
     def getSonarData_7(self):
-        return self.sonar_7.getSonarData()
+        return self.sonar_0.getSonarData()

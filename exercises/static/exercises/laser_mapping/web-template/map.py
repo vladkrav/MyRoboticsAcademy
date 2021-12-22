@@ -32,19 +32,6 @@ class Map:
 		RTz = self.RTz(pi/2, 50, 70, 0)
 		return RTz
 
-	# def getRobotCoordinates(self):
-	# 	pose = self.pose3d.getPose3d()
-	# 	x = pose.x
-	# 	y = pose.y
-		
-	# 	scale_y = 33.25; offset_y = 0.33
-	# 	y = 729 - (scale_y * y + offset_y)
-		
-	# 	scale_x = 33.25; offset_x = 0.33
-	# 	x = scale_x * x + offset_x
-		
-	# 	return x, y
-
 	def getRobotAngle(self):
 		pose = self.pose3d.getPose3d()
 		rt = pose.yaw
@@ -135,51 +122,51 @@ class Map:
 		self.dist.append(0)
 		self.dist[1] = self.hal.sonar_1.getSonarData().distances
 		if self.dist[1] == float("inf"):
-			self.dist[1] = self.hal.sonar_1.getSonarData().maxRange
+			self.dist[1] = self.hal.sonar_0.getSonarData().maxRange
 		elif self.dist[1] == float("-inf"):
-			self.dist[1] = self.hal.sonar_1.getSonarData().minRange
+			self.dist[1] = self.hal.sonar_0.getSonarData().minRange
 		# SONAR 2
 		self.dist.append(0)
 		self.dist[2] = self.hal.sonar_2.getSonarData().distances
 		if self.dist[2] == float("inf"):
-			self.dist[2] = self.hal.sonar_2.getSonarData().maxRange
+			self.dist[2] = self.hal.sonar_0.getSonarData().maxRange
 		elif self.dist[2] == float("-inf"):
-			self.dist[2] = self.hal.sonar_2.getSonarData().minRange
+			self.dist[2] = self.hal.sonar_0.getSonarData().minRange
 		#SONAR 3
 		self.dist.append(0)
 		self.dist[3] = self.hal.sonar_3.getSonarData().distances
 		if self.dist[3] == float("inf"):
-			self.dist[3] = self.hal.sonar_3.getSonarData().maxRange
+			self.dist[3] = self.hal.sonar_0.getSonarData().maxRange
 		elif self.dist[3] == float("-inf"):
-			self.dist[3] = self.hal.sonar_3.getSonarData().minRange
+			self.dist[3] = self.hal.sonar_0.getSonarData().minRange
 		#SONAR 4
 		self.dist.append(0)
 		self.dist[4] = self.hal.sonar_4.getSonarData().distances
 		if self.dist[4] == float("inf"):
-			self.dist[4] = self.hal.sonar_4.getSonarData().maxRange
+			self.dist[4] = self.hal.sonar_0.getSonarData().maxRange
 		elif self.dist[4] == float("-inf"):
-			self.dist[4] = self.hal.sonar_4.getSonarData().minRange
+			self.dist[4] = self.hal.sonar_0.getSonarData().minRange
 		#SONAR 5
 		self.dist.append(0)
 		self.dist[5] = self.hal.sonar_5.getSonarData().distances
 		if self.dist[5] == float("inf"):
-			self.dist[5] = self.hal.sonar_5.getSonarData().maxRange
+			self.dist[5] = self.hal.sonar_0.getSonarData().maxRange
 		elif self.dist[5] == float("-inf"):
-			self.dist[5] = self.hal.sonar_5.getSonarData().minRange
+			self.dist[5] = self.hal.sonar_0.getSonarData().minRange
 		#SONAR 6
 		self.dist.append(0)
 		self.dist[6] = self.hal.sonar_6.getSonarData().distances
 		if self.dist[6] == float("inf"):
-			self.dist[6] = self.hal.sonar_6.getSonarData().maxRange
+			self.dist[6] = self.hal.sonar_0.getSonarData().maxRange
 		elif self.dist[6] == float("-inf"):
-			self.dist[6] = self.hal.sonar_6.getSonarData().minRange
+			self.dist[6] = self.hal.sonar_0.getSonarData().minRange
 		#SONAR 7
 		self.dist.append(0)
 		self.dist[7] = self.hal.sonar_7.getSonarData().distances
 		if self.dist[7] == float("inf"):
-			self.dist[7] = self.hal.sonar_7.getSonarData().maxRange
+			self.dist[7] = self.hal.sonar_0.getSonarData().maxRange
 		elif self.dist[7] == float("-inf"):
-			self.dist[7] = self.hal.sonar_7.getSonarData().minRange
+			self.dist[7] = self.hal.sonar_0.getSonarData().minRange
 
 		pose = self.pose3d.getPose3d()
 		x_desired = self.config.pos_x
@@ -192,7 +179,7 @@ class Map:
 		vertices = []
 		sonar_sensor = []
 		# Se definen las posiciones de los vertices del triangulo
-		for i in range(8):
+		for i in range(0,8):
 			vertices.append((0,0,0,0))
 			distance = self.dist[i]
 			hipotenusa = distance/(math.cos(cone/2))
@@ -212,7 +199,7 @@ class Map:
 			xc_2, yc_2 = self.global2canvas(xg_2, yg_2)
 			vertices[i] = (xc_1, yc_1, xc_2, yc_2)
 		# Se definen las posiciones de los sensores sonar
-		for i in range(8):
+		for i in range(0,8):
 			sonar_sensor.append((0,0))
 			xg, yg = self.relative2global(x_desired + (x - self.initial_x), y_desired + (y - self.initial_y), self.sonares[i][0], self.sonares[i][1], yaw_desired + (yaw - self.initial_yaw))
 			xc, yc = self.global2canvas(xg, yg)

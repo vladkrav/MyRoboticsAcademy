@@ -127,7 +127,6 @@ class Map:
 		# SONAR 0
 		self.dist.append(0)
 		self.dist[0] = self.hal.sonar_0.getSonarData().distances
-		print(self.dist[0])
 		if self.dist[0] == float("inf"):
 			self.dist[0] = self.hal.sonar_0.getSonarData().maxRange
 		elif self.dist[0] == float("-inf"):
@@ -196,7 +195,6 @@ class Map:
 		for i in range(8):
 			vertices.append((0,0,0,0))
 			distance = self.dist[i]
-			print(self.dist[i])
 			hipotenusa = distance/(math.cos(cone/2))
 			if(self.sonares[i][2] < 0):
 				orientation = self.sonares[i][2] - cone/2

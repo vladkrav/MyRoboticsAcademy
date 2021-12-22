@@ -7,7 +7,7 @@ import os
 
 class Config:
     def __init__(self):
-        with open('/home/vlad/TFM/RoboticsAcademy/exercises/static/exercises/laser_loc/web-template/config_sim.json') as file:
+        with open('/home/vlad/TFM/RoboticsAcademy/exercises/static/exercises/laser_mapping/web-template/config_sim.json') as file:
             self.config = json.load(file)
         self.pos_x = self.config['CONFIGURATION']['POS_X']
         self.pos_y = self.config['CONFIGURATION']['POS_Y']
@@ -43,3 +43,6 @@ class Config:
             self.pub_motors.publish(self.msg)
         else:
             pass
+            # self.pos_x = ListenerPose3d.getPose3d.x
+            # self.pos_y = ListenerPose3d.getPose3d.y
+            # self.orientation = ListenerPose3d.getPose3d.yaw

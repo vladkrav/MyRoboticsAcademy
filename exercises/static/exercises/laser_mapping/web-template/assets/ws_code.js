@@ -13,7 +13,6 @@ stop_button.style.cursor = "not-allowed";
 var frequency = "0";
 
 //WebSocket for Code
-var aux_key;
 var websocket_code;
 var teleop_switch = false;
 ArrayText = new Array();
@@ -58,8 +57,8 @@ function declare_code(websocket_address){
 			websocket_code.send("#freq" + JSON.stringify(frequency_message));
 		}
 		else if (operation == "#ping"){
-			websocket_code.send("#ping");
-		}
+            websocket_code.send("#ping");
+        }
 	};
 }
 

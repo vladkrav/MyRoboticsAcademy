@@ -77,14 +77,3 @@ function declare_gui(websocket_address){
 		
 	}
 }
-function changemapping(){
-	var mapping_display = document.getElementById("mapping").style.display
-	console.log(mapping_display)
-	if(mapping_display == "none" || mapping_display == "none"){
-	  document.getElementById('mapping').style.display = 'block';
-	  enable_flag = 1;
-	} else{
-	  document.getElementById('mapping').style.display = 'none';
-	  enable_flag = 0;
-	}
-  }

@@ -4,11 +4,10 @@ var mapCanvas = document.getElementById("birds-eye"),
 	
 	
 var trail = [],
-	coords = [-1, -1];
-var resolution = 1;
+	coords = [-1, -1];;
+
 // Complete draw function
-function draw(pos, contorno, laser_data, sonar_sensor_point, pos_vertices, laser_global,
-	approximated_robot_pose, particles, estimated_laser){
+function draw(pos, contorno, laser_data, sonar_sensor_point, pos_vertices, laser_global){
 	mapCanvas.width = 769;
 	mapCanvas.height = 729;
 	
@@ -17,8 +16,6 @@ function draw(pos, contorno, laser_data, sonar_sensor_point, pos_vertices, laser
 	drawLaser(laser_data, laser_global);
 	drawAmigobot(pos, contorno);
 	drawSonar(sonar_sensor_point, pos_vertices);
-	drawAMCL(approximated_robot_pose, particles);
-	// drawEstimatedLaser(estimated_laser);
 }
 
 // Function to draw triangle
@@ -45,7 +42,6 @@ function drawTriangle(posx, posy, angx, angy){
 	/*Crea un nuevo trazo. Una vez creado, los comandos
 	de dibujo futuros son aplicados dentro del trazo y 
 	usados para construir el nuevo trazo hacia arriba*/
-	var ang = 0;
 	ctx.beginPath();
 	
 	px = posx;
@@ -138,7 +134,7 @@ function drawSonar(sonar_sensor_point, pos_vertices){
 	let py_sensor = [];
 	let j = 0;
 	let z = 0;
-	// alert(`[close] Connection closed cleanly`);
+
 	for(let k of sonar_sensor_point){
 		px_sensor[j] = k[0];
 		py_sensor[j] = k[1];
@@ -160,68 +156,3 @@ function drawSonar(sonar_sensor_point, pos_vertices){
 		z++;
 	}
 }
-function drawAMCL(approximated_robot_pose, particles){
-	// alert(`[close] Connection closed cleanly`);
-	for(let d of particles){
-		ctx.beginPath();
-		ctx.strokeStyle = "#000000";
-		if(d[4]<=0.02){
-			ctx.fillStyle = "#00FF2E";
-		}
-		else if(d[4]>0.02 && d[4]<=0.04){
-			ctx.fillStyle = "#00B821";
-		}
-		else if(d[4]>0.04 && d[4]<=0.06){
-			ctx.fillStyle = "#008C19";
-		}
-		else if(d[4]>0.06 && d[4]<=0.08){
-			ctx.fillStyle = "#005910";
-		}
-		else if(d[4]>0.08 && d[4]<=0.1){
-			ctx.fillStyle = "#002306";
-		}
-		ctx.arc(d[0] / resolution , 729 - d[1] / resolution, 3, 0, 2 * Math.PI);
-
-		xr = Math.cos(0)*15;
-		yr = Math.sin(0)*15;
-		
-		px = d[0] + Math.cos(d[2]) * xr - Math.sin(d[2]) * yr;
-		py = d[1] + Math.sin(d[2]) * xr + Math.cos(d[2]) * yr;
-		
-		ctx.moveTo(d[0] / resolution, 729 - (d[1] / resolution));
-		ctx.lineTo(px, 729 - py);
-		ctx.stroke();
-		ctx.fill();
-		ctx.closePath();
-	}
-	ctx.beginPath();
-	ctx.strokeStyle = "#000000";
-	ctx.fillStyle = "#0000FF";
-	ctx.arc(approximated_robot_pose[0] / resolution, 729 - approximated_robot_pose[1] / resolution, 8, 0, 2 * Math.PI);
-	
-	xr = Math.cos(0)*20;
-	yr = Math.sin(0)*20;
-	
-	px = approximated_robot_pose[0] + Math.cos(approximated_robot_pose[2]) * xr - Math.sin(approximated_robot_pose[2]) * yr;
-	py = approximated_robot_pose[1] + Math.sin(approximated_robot_pose[2]) * xr + Math.cos(approximated_robot_pose[2]) * yr;
-
-	ctx.moveTo(approximated_robot_pose[0] / resolution, 729 - approximated_robot_pose[1] / resolution)
-	ctx.lineTo(px, 729 - py)
-	ctx.stroke();
-	ctx.fill();
-	ctx.closePath();
-}
-// function drawEstimatedLaser(estimated_laser){
-// 	var j = 0;
-// 	for(let d of estimated_laser[0]){
-// 		for(let i = 0; i < 5; i++){
-// 			ctx.beginPath();
-// 			ctx.strokeStyle = "#002AFE";
-// 			ctx.moveTo(d[0], 729 - d[1]);
-// 			ctx.lineTo(estimated_laser[1][j][i][0], 729 - estimated_laser[1][j][i][1]);
-// 			ctx.stroke();
-// 			ctx.closePath();
-// 		}
-// 		j = j + 1;
-// 	}
-// }

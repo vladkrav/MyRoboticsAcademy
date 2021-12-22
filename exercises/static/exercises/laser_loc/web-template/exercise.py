@@ -230,8 +230,8 @@ class Template:
 
         # Add GUI functions
         gui_module.GUI.update = self.gui.update_gui
-        # gui_module.GUI.showParticles = self.gui.showParticles
-        # gui_module.GUI.showEstimatedPose = self.gui.showEstimatedPose
+        gui_module.GUI.showParticles = self.gui.showParticles
+        gui_module.GUI.showEstimatedPose = self.gui.showEstimatedPose
         # gui_module.GUI.showEstimatedLaser = self.gui.showEstimatedLaser
 
         # Adding modules to system

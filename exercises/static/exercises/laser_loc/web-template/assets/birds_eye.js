@@ -6,7 +6,6 @@ var mapCanvas = document.getElementById("birds-eye"),
 var trail = [],
 	coords = [-1, -1];
 var resolution = 1;
-var estimated_laser = [[0,0,0,0,0],[0]]
 // Complete draw function
 function draw(pos, contorno, laser_data, sonar_sensor_point, pos_vertices, laser_global,
 	approximated_robot_pose, particles, estimated_laser){
@@ -19,7 +18,7 @@ function draw(pos, contorno, laser_data, sonar_sensor_point, pos_vertices, laser
 	drawAmigobot(pos, contorno);
 	drawSonar(sonar_sensor_point, pos_vertices);
 	drawAMCL(approximated_robot_pose, particles);
-	drawEstimatedLaser(estimated_laser);
+	// drawEstimatedLaser(estimated_laser);
 }
 
 // Function to draw triangle
@@ -46,6 +45,7 @@ function drawTriangle(posx, posy, angx, angy){
 	/*Crea un nuevo trazo. Una vez creado, los comandos
 	de dibujo futuros son aplicados dentro del trazo y 
 	usados para construir el nuevo trazo hacia arriba*/
+	var ang = 0;
 	ctx.beginPath();
 	
 	px = posx;
@@ -138,7 +138,7 @@ function drawSonar(sonar_sensor_point, pos_vertices){
 	let py_sensor = [];
 	let j = 0;
 	let z = 0;
-
+	// alert(`[close] Connection closed cleanly`);
 	for(let k of sonar_sensor_point){
 		px_sensor[j] = k[0];
 		py_sensor[j] = k[1];
@@ -161,6 +161,7 @@ function drawSonar(sonar_sensor_point, pos_vertices){
 	}
 }
 function drawAMCL(approximated_robot_pose, particles){
+	// alert(`[close] Connection closed cleanly`);
 	for(let d of particles){
 		ctx.beginPath();
 		ctx.strokeStyle = "#000000";
