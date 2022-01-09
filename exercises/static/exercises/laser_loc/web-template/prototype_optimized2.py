@@ -7,7 +7,7 @@ import random
 from LUT import Q, L1
 # Enter sequential code!
 
-num_particles = 500
+num_particles = 300
 particles = []
 robot_x = 0
 robot_y = 0
@@ -24,6 +24,7 @@ new_x = 0
 new_y = 0
 new_yaw = 0
 new_weight = 0
+
 # Posicion inicial del robot
 robot_pose_x = HAL.getPose3d().x / 0.03
 robot_pose_y =  HAL.getPose3d().y / 0.03
@@ -34,6 +35,7 @@ while(robot_pose_yaw > math.pi*2):
     robot_pose_yaw = robot_pose_yaw - math.pi*2
 num_rayos = 15
 ray_multiplier = math.ceil(2*math.pi/(num_rayos * angleincrement))
+
 # Incertidumbre de la posicion incial
 var_x = 25
 var_y = 25
@@ -41,6 +43,7 @@ var_yaw = math.pi
 std_x = 10
 std_y = 10
 std_yaw = math.pi
+
 # Etapa de generacion de las particulas
 # Se generan las primeras partículas aleatoriamente alrededor del punto incial del robot
 wo = 1.0 / float(num_particles)
@@ -148,7 +151,6 @@ while True:
 
         # Obtencion del vector real con distancias manhattan
         vector_real = []
-        # for i in range(0, 400, 80):
         for i in range(num_rayos):
             k = int(i * 400 / num_rayos) # Selecciona la posicion del array que se debe coger.
             if(laser_rays.values[k] == float("-inf") or laser_rays.values[k] == float("inf")):
@@ -218,12 +220,13 @@ while True:
                 less_particles.append((particle,i)) # Se almacena en las particulas que son menores que un determinado umbral.
         print("Numero de particulas greater", len(greater_particles))
         print("Numero de particulas less:", len(less_particles))
-        while ((iteracion < 0.6*np.array(greater_particles).size) and len(array_resampled) <= num_particles - 1): # Mientras no se coja una cantidad determinada random de particulas mayores que un determinado umbral.
+        
+        while ((iteracion < 0.9*np.array(greater_particles).size) and len(array_resampled) <= num_particles - 1): # Mientras no se coja una cantidad determinada random de particulas mayores que un determinado umbral.
             particle_resampled = random.choice(greater_particles)
             array_resampled.append((particle_resampled))
             iteracion += 1
         iteracion = 0
-        while ((iteracion < 0.4 * np.array(less_particles).size) and len(array_resampled) <= num_particles - 1): # Mientras no se coja una cantidad determinada random de particulas menores que un determinado umbral.
+        while ((iteracion < 0.1 * np.array(less_particles).size) and len(array_resampled) <= num_particles - 1): # Mientras no se coja una cantidad determinada random de particulas menores que un determinado umbral.
             particle_resampled = random.choice(less_particles)
             array_resampled.append((particle_resampled))
             iteracion += 1
@@ -232,10 +235,7 @@ while True:
         ############################################################################
         # Se aplica el modelo de movimiento a las particulas
         h = distance_control
-        if(h != 0):
-            d_x = abs(posx - robot_pose_x)
-            angulo = math.acos(d_x/h)
-        
+        if(h != 0):        
             xr = math.cos(0)*h
             yr = math.sin(0)*h
         else:
@@ -276,13 +276,12 @@ while True:
         estimation_time = time() - (start_time + observation_time + vector_real_time + comparition_time + probability_time + resampling_time + movement_time)
         print("El tiempo de estimacion es:")
         print(estimation_time)
-        # Se actualiza el peso de las particulas a su estado original
         if(numero_iteraciones >= 10):
             numero_iteraciones = 0
             new_particles = 0
             tmp_particles = []
             index = np.argmax(np.array(particles)[:][:,3])
-            threshold_weight = 0.0000001*mean #particles[index][3] * 0.5
+            threshold_weight = 0.001*mean
             print("La particula con mayor peso es:", particles[index][3])
             new_weight = 1.0 / float(num_particles)
             while new_particles <= 0.90 * num_particles:
