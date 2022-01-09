@@ -4,98 +4,9 @@ import numpy as np
 import math
 from time import time
 import random
+from LUT import Q, L1
 # Enter sequential code!
-line_1 = np.cross([104,729 - 330,1],[104,729 - 497,1])
-line_2 = np.cross([104,729 - 497,1],[157,729 - 497,1])
-line_3 = np.cross([157,729 - 497,1],[157,729 - 550,1])
-line_4 = np.cross([157,729 - 550,1],[211,729 - 550,1])
-line_5 = np.cross([211,729 - 550,1],[211,729 - 604,1])
-line_6 = np.cross([211,729 - 604,1],[265,729 - 604,1])
-line_7 = np.cross([265,729 - 604,1],[265,729 - 659,1])
-line_8 = np.cross([265,729 - 659,1],[431,729 - 659,1])
-line_9 = np.cross([431,729 - 659,1],[431,729 - 604,1])
-line_10 = np.cross([431,729 - 604,1],[484,729 - 604,1])
-line_11 = np.cross([484,729 - 604,1],[484,729 - 547,1])
-line_12 = np.cross([484,729 - 547,1],[538,729 - 547,1])
-line_13 = np.cross([538,729 - 547,1],[538,729 - 439,1])
-line_14 = np.cross([538,729 - 439,1],[647,729 - 439,1])
-line_15 = np.cross([647,729 - 439,1],[647,729 - 385,1])
-line_16 = np.cross([647,729 - 385,1],[700,729 - 385,1])
-line_17 = np.cross([700,729 - 385,1],[700,729 - 283,1])
-line_18 = np.cross([747,729 - 277,1],[535,729 - 277,1])
-line_19 = np.cross([591,729 - 328,1],[591,729 - 281,1])
-line_20 = np.cross([537,729 - 223,1],[537,729 - 281,1])
-line_21 = np.cross([590,729 - 224,1],[644,729 - 224,1])
-line_22 = np.cross([747,729 - 277,1],[747,729 - 224,1])
-line_23 = np.cross([747,729 - 224,1],[698,729 - 224,1])
-line_24 = np.cross([698,729 - 224,1],[698,729 - 171,1])
-line_25 = np.cross([698,729 - 171,1],[644,729 - 171,1])
-line_26 = np.cross([644,729 - 171,1],[644,729 - 117,1])
-line_27 = np.cross([644,729 - 117,1],[590,729 - 116,1])
-line_28 = np.cross([590,729 - 116,1],[590,729 - 62,1])
-line_29 = np.cross([590,729 - 62,1],[482,729 - 62,1]) 
-line_30 = np.cross([482,729 - 62,1],[482,729 - 116,1]) 
-line_31 = np.cross([482,729 - 116,1],[536,729 - 116,1])
-line_32 = np.cross([536,729 - 116,1],[536,729 - 8,1])
-line_33 = np.cross([536,729 - 8,1],[428,729 - 8,1])
-line_34 = np.cross([428,729 - 8,1],[428,729 - 62,1])
-line_35 = np.cross([428,729 - 62,1],[374,729 - 62,1])
-line_36 = np.cross([374,729 - 62,1],[374,729 - 116,1])
-line_37 = np.cross([374,729 - 116,1],[320,729 - 116,1])
-line_38 = np.cross([320,729 - 116,1],[320,729 - 224,1])
-line_39 = np.cross([320,729 - 224,1],[212,729 - 224,1])
-line_40 = np.cross([212,729 - 224,1],[212,729 - 278,1])
-line_41 = np.cross([212,729 - 278,1],[158,729 - 278,1])
-line_42 = np.cross([158,729 - 278,1],[158,729 - 332,1])
-line_43 = np.cross([104,729 - 332,1],[212,729 - 332,1])
-line_44 = np.cross([212,729 - 332,1],[212,729 - 440,1])
-line_45 = np.cross([158,729 - 440,1],[266,729 - 440,1])
-line_46 = np.cross([158,729 - 440,1],[158,729 - 384,1])
-line_47 = np.cross([266,729 - 385,1],[266,729 - 549,1])
-line_48 = np.cross([266,729 - 385,1],[212,729 - 385,1])
-line_49 = np.cross([266,729 - 549,1],[374,729 - 549,1])
-line_50 = np.cross([320,729 - 603,1],[320,729 - 549,1])
-line_51 = np.cross([374,729 - 549,1],[374,729 - 495,1])
-line_52 = np.cross([374,729 - 495,1],[482,729 - 495,1])
-line_53 = np.cross([482,729 - 495,1],[482,729 - 387,1])
-line_54 = np.cross([482,729 - 387,1],[431,729 - 387,1])
-line_55 = np.cross([431,729 - 387,1],[431,729 - 116,1])
-line_56 = np.cross([431,729 - 333,1],[370,729 - 333,1])
-line_57 = np.cross([370,729 - 333,1],[370,729 - 279,1])
-line_58 = np.cross([370,729 - 279,1],[262,729 - 279,1])
-line_59 = np.cross([262,729 - 279,1],[262,729 - 333,1])
-line_60 = np.cross([262,729 - 333,1],[316,729 - 333,1])
-line_61 = np.cross([316,729 - 333,1],[316,729 - 279,1])
-line_62 = np.cross([482,729 - 222,1],[374,729 - 222,1])
-line_63 = np.cross([374,729 - 222,1],[374,729 - 168,1])
-line_64 = np.cross([482,729 - 170,1],[482,729 - 334,1])
-line_65 = np.cross([482,729 - 170,1],[428,729 - 170,1])
-line_66 = np.cross([482,729 - 334,1],[536,729 - 334,1])
-line_67 = np.cross([536,729 - 334,1],[536,729 - 388,1])
-line_68 = np.cross([536,729 - 388,1],[590,729 - 388,1])
-line_69 = np.cross([320,729 - 493,1],[320,729 - 439,1])
-line_70 = np.cross([373,729 - 437,1],[428,729 - 437,1])
-Q = np.array([([104,729 - 330,1],[104,729 - 497,1]),([104,729 - 497,1],[157,729 - 497,1]),([157,729 - 497,1],[157,729 - 550,1]),([157,729 - 550,1],[211,729 - 550,1]),([211,729 - 550,1],[211,729 - 604,1]),
-                        ([211,729 - 604,1],[265,729 - 604,1]),([265,729 - 604,1],[265,729 - 659,1]),([265,729 - 659,1],[431,729 - 659,1]),([431,729 - 659,1],[431,729 - 604,1]),([431,729 - 604,1],[484,729 - 604,1]),
-                        ([484,729 - 604,1],[484,729 - 547,1]),([484,729 - 547,1],[538,729 - 547,1]),([538,729 - 547,1],[538,729 - 439,1]),([538,729 - 439,1],[647,729 - 439,1]),([647,729 - 439,1],[647,729 - 385,1]),
-                        ([647,729 - 385,1],[700,729 - 385,1]),([700,729 - 385,1],[700,729 - 283,1]),([747,729 - 277,1],[535,729 - 277,1]),([591,729 - 328,1],[591,729 - 281,1]),([537,729 - 223,1],[537,729 - 281,1]),
-                        ([590,729 - 224,1],[644,729 - 224,1]),([747,729 - 277,1],[747,729 - 224,1]),([747,729 - 224,1],[698,729 - 224,1]),([698,729 - 224,1],[698,729 - 171,1]),([698,729 - 171,1],[644,729 - 171,1]),
-                        ([644,729 - 171,1],[644,729 - 117,1]),([644,729 - 117,1],[590,729 - 116,1]),([590,729 - 116,1],[590,729 - 62,1]),([590,729 - 62,1],[482,729 - 62,1]),([482,729 - 62,1],[482,729 - 116,1]),
-                        ([482,729 - 116,1],[536,729 - 116,1]),([536,729 - 116,1],[536,729 - 8,1]),([536,729 - 8,1],[428,729 - 8,1]),([428,729 - 8,1],[428,729 - 62,1]),([428,729 - 62,1],[374,729 - 62,1]),
-                        ([374,729 - 62,1],[374,729 - 116,1]),([374,729 - 116,1],[320,729 - 116,1]),([320,729 - 116,1],[320,729 - 224,1]),([320,729 - 224,1],[212,729 - 224,1]),([212,729 - 224,1],[212,729 - 278,1]),
-                        ([212,729 - 278,1],[158,729 - 278,1]),([158,729 - 278,1],[158,729 - 332,1]),([104,729 - 332,1],[212,729 - 332,1]),([212,729 - 332,1],[212,729 - 440,1]),([158,729 - 440,1],[266,729 - 440,1]),
-                        ([158,729 - 440,1],[158,729 - 384,1]),([266,729 - 385,1],[266,729 - 549,1]),([266,729 - 385,1],[212,729 - 385,1]),([266,729 - 549,1],[374,729 - 549,1]),([320,729 - 603,1],[320,729 - 549,1]),
-                        ([374,729 - 549,1],[374,729 - 495,1]),([374,729 - 495,1],[482,729 - 495,1]),([482,729 - 495,1],[482,729 - 387,1]),([482,729 - 387,1],[431,729 - 387,1]),([431,729 - 387,1],[431,729 - 116,1]),
-                        ([431,729 - 333,1],[370,729 - 333,1]),([370,729 - 333,1],[370,729 - 279,1]),([370,729 - 279,1],[262,729 - 279,1]),([262,729 - 279,1],[262,729 - 333,1]),([262,729 - 333,1],[316,729 - 333,1]),
-                        ([316,729 - 333,1],[316,729 - 279,1]),([482,729 - 222,1],[374,729 - 222,1]),([374,729 - 222,1],[374,729 - 168,1]),([482,729 - 170,1],[482,729 - 334,1]),([482,729 - 170,1],[428,729 - 170,1]),
-                        ([482,729 - 334,1],[536,729 - 334,1]),([536,729 - 334,1],[536,729 - 388,1]),([536,729 - 388,1],[590,729 - 388,1]),([320,729 - 493,1],[320,729 - 439,1]),([373,729 - 437,1],[428,729 - 437,1])], dtype=object).tolist()
-L1 = np.array((line_1, line_2, line_3, line_4, line_5, line_6, line_7, line_8, line_9, line_10, 
-                line_11,line_12,line_13,line_14,line_15,line_16,line_17,line_18,line_19,line_20,
-                line_21,line_22,line_23,line_24,line_25,line_26,line_27,line_28,line_29,line_30,
-                line_31,line_32,line_33,line_34,line_35,line_36,line_37,line_38,line_39,line_40,
-                line_41,line_42,line_43,line_44,line_45,line_46,line_47,line_48,line_49,line_50,
-                line_51,line_52,line_53,line_54,line_55,line_56,line_57,line_58,line_59,line_60,
-                line_61,line_62,line_63,line_64,line_65,line_66,line_67,line_68,line_69,line_70), dtype=object).tolist()
+
 num_particles = 500
 particles = []
 robot_x = 0
@@ -121,21 +32,22 @@ while(robot_pose_yaw < 0):
     robot_pose_yaw = math.pi*2 + robot_pose_yaw
 while(robot_pose_yaw > math.pi*2):
     robot_pose_yaw = robot_pose_yaw - math.pi*2
-num_rayos = 10
+num_rayos = 15
 ray_multiplier = math.ceil(2*math.pi/(num_rayos * angleincrement))
-print("Ray_multiplier es:", ray_multiplier)
 # Incertidumbre de la posicion incial
-var_x = 10
-var_y = 10
-# var_yaw = 2.0 * math.pi / 180.0
+var_x = 25
+var_y = 25
 var_yaw = math.pi
+std_x = 10
+std_y = 10
+std_yaw = math.pi
 # Etapa de generacion de las particulas
 # Se generan las primeras partículas aleatoriamente alrededor del punto incial del robot
 wo = 1.0 / float(num_particles)
 w_persist = wo
 for i in range(num_particles):
-    x = np.random.normal(round(robot_pose_x),var_x)
-    y = np.random.normal(round(robot_pose_y),var_y)
+    x = np.random.normal(round(robot_pose_x), var_x)
+    y = np.random.normal(round(robot_pose_y), var_y)
     yaw = np.random.normal(robot_pose_yaw, var_yaw)
     while(yaw < 0):
         yaw = math.pi*2 + yaw
@@ -216,7 +128,6 @@ while True:
                                         if(Di < D_min):
                                             D_min = Di
                                             pnt_impacto = np.array((round(P[0]), round(P[1]))).tolist()
-                # print(num_lineas)
                 num_lineas = 0
                 laser_teorico[z].append((pnt_impacto))
                 if pnt_impacto:
@@ -231,7 +142,6 @@ while True:
                 D_min = 729**2 + 729**2
                 ang_iter += 1
             ang_iter = 0
-        # GUI.showEstimatedLaser((particles,laser_teorico))
         observation_time = time() - start_time
         print("El tiempo de observacion es:")
         print(observation_time)
@@ -251,12 +161,9 @@ while True:
             x = posx + math.cos(actual_pose_yaw) * xr - math.sin(actual_pose_yaw) * yr
             y = posy + math.sin(actual_pose_yaw) * xr + math.cos(actual_pose_yaw) * yr
 
-            # print("La posicion x del rayo es:", x)
-            # print("La posicion y del rayo es:", y)
-
             manhattan = round((abs(posx - x) + abs(posy - y)))
             vector_real.append((manhattan))
-            angle_real = angle_real + angleincrement * ray_multiplier # Debe haber 10 rayos en cada particula
+            angle_real = angle_real + angleincrement * ray_multiplier
             while(angle_real < 0):
                 angle_real = math.pi*2 + angle_real
             while(angle_real > math.pi*2):
@@ -265,7 +172,6 @@ while True:
         vector_real_time = time() - (start_time + observation_time)
         print("El tiempo de generacion del vector real es:")
         print(vector_real_time)
-        umbral = 8 # 4
         v = 0
         distancia = [[] for _ in range(num_particles)]
         for i, item in enumerate(vector_teorico):
@@ -293,7 +199,6 @@ while True:
         effective_sample_size = 1.0 / effective_sample_size
         print("El valor de effective_sample_size es:", effective_sample_size)
         # El valor de la media de la lista de probabilidades
-        # print("Se imprimen las particulas justo despues del asignar prob", particles)
         mean = sum(array_prob)/len(array_prob)
         print("el valor medio de las particulas es:", mean)
         probability_time = time() - (start_time + observation_time + vector_real_time + comparition_time)
@@ -307,25 +212,22 @@ while True:
         greater_particles = []
         less_particles = []
         for i, particle in enumerate(particles): # De todas las particulas 
-            if(particle[3] > mean): #0.5*np.max(np.array(particles)[:][:,3])): Si la probabilidad de la particula es mayor que un determinado umbral:
+            if(particle[3] > 0.001*mean): #0.5*np.max(np.array(particles)[:][:,3])): Si la probabilidad de la particula es mayor que un determinado umbral:
                 greater_particles.append((particle,i)) # Entonces se almacena en las particulas que son mayores que un determinado umbral.
-            elif(particle[3] <= mean): #0.5*np.max(np.array(particles)[:][:,3])): Si la probabilidad es menor que un determinado umbral:
+            elif(particle[3] <= 0.001*mean): #0.5*np.max(np.array(particles)[:][:,3])): Si la probabilidad es menor que un determinado umbral:
                 less_particles.append((particle,i)) # Se almacena en las particulas que son menores que un determinado umbral.
-
-        while ((iteracion < 0.9*np.array(greater_particles).size) and len(array_resampled) <= num_particles - 1): # Mientras no se coja una cantidad determinada random de particulas mayores que un determinado umbral.
+        print("Numero de particulas greater", len(greater_particles))
+        print("Numero de particulas less:", len(less_particles))
+        while ((iteracion < 0.6*np.array(greater_particles).size) and len(array_resampled) <= num_particles - 1): # Mientras no se coja una cantidad determinada random de particulas mayores que un determinado umbral.
             particle_resampled = random.choice(greater_particles)
             array_resampled.append((particle_resampled))
             iteracion += 1
         iteracion = 0
-        # print("la primera parte del array_resampled", array_resampled)
-        print()
-        while ((iteracion < 0.1 * np.array(less_particles).size) and len(array_resampled) <= num_particles - 1): # Mientras no se coja una cantidad determinada random de particulas menores que un determinado umbral.
+        while ((iteracion < 0.4 * np.array(less_particles).size) and len(array_resampled) <= num_particles - 1): # Mientras no se coja una cantidad determinada random de particulas menores que un determinado umbral.
             particle_resampled = random.choice(less_particles)
             array_resampled.append((particle_resampled))
             iteracion += 1
-        # print("La segunda parte del array_resampled", array_resampled)
-        ############################################################################
-        ############################################################################
+        print("Numero de particulas que mueve el algoritmo", len(array_resampled))
         ############################################################################
         ############################################################################
         # Se aplica el modelo de movimiento a las particulas
@@ -345,36 +247,15 @@ while True:
         move_yaw = pos_actual_yaw - robot_pose_yaw # Incremento del movimiento de la orientacion
         
         # Se aplica el movimiento calculado a las particulas
-        # Dependiendo de como este orientada la particula, se aplica un movimiento u otro
         array_resampled = np.array(array_resampled).tolist()
-        # array_resampled = particles
-        v_x = 0
-        v_y = 0
         sum_weight_particles = 0
         resampling_time = time() - (start_time + observation_time + vector_real_time + comparition_time + probability_time)
         print("El tiempo de resampleo es:")
         print(resampling_time)
-        # print(array_resampled)
         for i, particle in enumerate(array_resampled):
             particle[0][0] = round(particle[0][0] + math.cos(particle[0][2])*xr - math.sin(particle[0][2])*yr)
             particle[0][1] = round(particle[0][1] + math.sin(particle[0][2])*xr + math.cos(particle[0][2])*yr)
             particle[0][2] = particle[0][2] + move_yaw
-            # Si la particula no esta dentro del rango del mapa o la probabilidad es menor que un determinado valor:
-            # if ((particle[0][0] < x_min or particle[0][0] > x_max) or (particle[0][1] < y_min or particle[0][1] > y_max)):
-            #     # Se remuestrea la particula alrededor de la particula con mayor peso
-            #     index = np.argmax(np.array(particles)[:][:,3])
-            #     x = np.random.normal(particles[index][0], v_x)
-            #     y = np.random.normal(particles[index][1], v_y)
-            #     yaw = np.random.normal(particles[index][2], var_yaw)
-            #     while(yaw < 0):
-            #         yaw = math.pi*2 + yaw
-            #     while(yaw > math.pi*2):
-            #         yaw = yaw - math.pi*2
-            #     particle[0][0] = round(x)
-            #     particle[0][1] = round(y)
-            #     particle[0][2] = yaw
-            # # particles[particle[1]] = particle[0]
-
             # Sumatorio de los pesos de las particulas que se han considerado en esa iteracion
             sum_weight_particles += particle[0][3]
         movement_time = time() - (start_time + observation_time + vector_real_time + comparition_time + probability_time + resampling_time)
@@ -395,35 +276,31 @@ while True:
         estimation_time = time() - (start_time + observation_time + vector_real_time + comparition_time + probability_time + resampling_time + movement_time)
         print("El tiempo de estimacion es:")
         print(estimation_time)
-        # # Se actualiza el peso de las particulas a su estado original
-        # for i, particle in enumerate(particles):
-        #     particle[3] = 1.0 / float(num_particles)
+        # Se actualiza el peso de las particulas a su estado original
         if(numero_iteraciones >= 10):
             numero_iteraciones = 0
             new_particles = 0
             tmp_particles = []
             index = np.argmax(np.array(particles)[:][:,3])
-            threshold_weight = mean #particles[index][3] * 0.5
+            threshold_weight = 0.0000001*mean #particles[index][3] * 0.5
             print("La particula con mayor peso es:", particles[index][3])
             new_weight = 1.0 / float(num_particles)
             while new_particles <= 0.90 * num_particles:
                 indice = np.random.choice(np.arange(0,len(greater_particles)))
-                print("La longitud del array greater_particles:", len(greater_particles))
                 print("El indice que ha elegido ha sido:", indice)
                 if(greater_particles[indice][0][3] > threshold_weight):
-                    # print("La particula es mayor que el umbral", greater_particles[indice][0])
-                    new_x = np.random.normal(greater_particles[indice][0][0],var_x)
-                    new_y = np.random.normal(greater_particles[indice][0][1],var_y)
-                    new_yaw = np.random.normal(greater_particles[indice][0][2],var_yaw)
+                    new_x = np.random.normal(greater_particles[indice][0][0], std_x)
+                    new_y = np.random.normal(greater_particles[indice][0][1], std_y)
+                    new_yaw = np.random.normal(greater_particles[indice][0][2], std_yaw)
                     if not ((new_x < x_min or new_x > x_max) or (new_y < y_min or new_y > y_max)):
                         tmp_particles.append((new_x, new_y, new_yaw, new_weight))
                         new_particles += 1
             while new_particles <= num_particles:
                 indice = np.random.choice(np.arange(0,len(less_particles)))
                 print("La longitud del array less_particles:", len(less_particles))
-                new_x = np.random.normal(less_particles[indice][0][0], var_x)
-                new_y = np.random.normal(less_particles[indice][0][1], var_y)
-                new_yaw = np.random.normal(less_particles[indice][0][2], var_yaw)
+                new_x = np.random.normal(less_particles[indice][0][0], std_x)
+                new_y = np.random.normal(less_particles[indice][0][1], std_y)
+                new_yaw = np.random.normal(less_particles[indice][0][2], std_yaw)
                 if not ((new_x < x_min or new_x > x_max) or (new_y < y_min or new_y > y_max)):
                         tmp_particles.append((new_x, new_y, new_yaw, new_weight))
                         new_particles += 1
