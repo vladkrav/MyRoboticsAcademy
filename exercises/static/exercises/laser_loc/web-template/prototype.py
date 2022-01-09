@@ -221,12 +221,12 @@ while True:
         print("Numero de particulas greater", len(greater_particles))
         print("Numero de particulas less:", len(less_particles))
         
-        while ((iteracion < 0.9*np.array(greater_particles).size) and len(array_resampled) <= num_particles - 1): # Mientras no se coja una cantidad determinada random de particulas mayores que un determinado umbral.
+        while ((iteracion < 0.7* len(greater_particles)) and len(array_resampled) <= num_particles - 1): # Mientras no se coja una cantidad determinada random de particulas mayores que un determinado umbral.
             particle_resampled = random.choice(greater_particles)
             array_resampled.append((particle_resampled))
             iteracion += 1
         iteracion = 0
-        while ((iteracion < 0.1 * np.array(less_particles).size) and len(array_resampled) <= num_particles - 1): # Mientras no se coja una cantidad determinada random de particulas menores que un determinado umbral.
+        while ((iteracion < 0.3 * len(less_particles)) and len(array_resampled) <= num_particles - 1): # Mientras no se coja una cantidad determinada random de particulas menores que un determinado umbral.
             particle_resampled = random.choice(less_particles)
             array_resampled.append((particle_resampled))
             iteracion += 1
@@ -234,17 +234,19 @@ while True:
         ############################################################################
         ############################################################################
         # Se aplica el modelo de movimiento a las particulas
+        turn_noise = 5.
+        forward_noise = 5.
         h = distance_control
         if(h != 0):        
-            xr = math.cos(0)*h
-            yr = math.sin(0)*h
+            xr = math.cos(0)*h + random.gauss(0.0, forward_noise)
+            yr = math.sin(0)*h + random.gauss(0.0, forward_noise)
         else:
             xr = 0
             yr = 0
-
+        
         # Se obtiene el giro que se ha realizado desde la última iteracion
         pos_actual_yaw = angle_real # Orientacion actual del robot
-        move_yaw = pos_actual_yaw - robot_pose_yaw # Incremento del movimiento de la orientacion
+        move_yaw = pos_actual_yaw - robot_pose_yaw + random.gauss(0.0, turn_noise) % (2 * math.pi) # Incremento del movimiento de la orientacion
         
         # Se aplica el movimiento calculado a las particulas
         array_resampled = np.array(array_resampled).tolist()
@@ -281,7 +283,7 @@ while True:
             new_particles = 0
             tmp_particles = []
             index = np.argmax(np.array(particles)[:][:,3])
-            threshold_weight = 0.001*mean
+            threshold_weight = 0.1*mean
             print("La particula con mayor peso es:", particles[index][3])
             new_weight = 1.0 / float(num_particles)
             while new_particles <= 0.90 * num_particles:
@@ -292,7 +294,7 @@ while True:
                     new_y = np.random.normal(greater_particles[indice][0][1], std_y)
                     new_yaw = np.random.normal(greater_particles[indice][0][2], std_yaw)
                     if not ((new_x < x_min or new_x > x_max) or (new_y < y_min or new_y > y_max)):
-                        tmp_particles.append((new_x, new_y, new_yaw, new_weight))
+                        tmp_particles.append((new_x, new_y, new_yaw, new_weight, new_weight))
                         new_particles += 1
             while new_particles <= num_particles:
                 indice = np.random.choice(np.arange(0,len(less_particles)))
@@ -301,7 +303,7 @@ while True:
                 new_y = np.random.normal(less_particles[indice][0][1], std_y)
                 new_yaw = np.random.normal(less_particles[indice][0][2], std_yaw)
                 if not ((new_x < x_min or new_x > x_max) or (new_y < y_min or new_y > y_max)):
-                        tmp_particles.append((new_x, new_y, new_yaw, new_weight))
+                        tmp_particles.append((new_x, new_y, new_yaw, new_weight, new_weight))
                         new_particles += 1
             print("El valor de new_particles es:", new_particles)
             for i, particle in enumerate(particles):
@@ -309,7 +311,7 @@ while True:
                 particle[1] = tmp_particles[i][1]
                 particle[2] = tmp_particles[i][2]
                 particle[3] = tmp_particles[i][3]
-                particle[4] = tmp_particles[i][3]
+                particle[4] = tmp_particles[i][4]
             GUI.showParticles(particles)
         elapsed_time = time() - start_time
         print("El codigo ha tardado:")
