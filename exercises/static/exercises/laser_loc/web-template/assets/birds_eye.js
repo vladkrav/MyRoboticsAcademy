@@ -165,20 +165,20 @@ function drawAMCL(approximated_robot_pose, particles){
 	for(let d of particles){
 		ctx.beginPath();
 		ctx.strokeStyle = "#000000";
-		if(d[4]<=0.02){
-			ctx.fillStyle = "#00FF2E";
+		if(d[4]<=0.2){
+			ctx.fillStyle = "#FFFFFF";
 		}
-		else if(d[4]>0.02 && d[4]<=0.04){
-			ctx.fillStyle = "#00B821";
+		else if(d[4]>0.2 && d[4]<=0.4){
+			ctx.fillStyle = "#FFF000";
 		}
-		else if(d[4]>0.04 && d[4]<=0.06){
-			ctx.fillStyle = "#008C19";
+		else if(d[4]>0.4 && d[4]<=0.6){
+			ctx.fillStyle = "#FFAA00";
 		}
-		else if(d[4]>0.06 && d[4]<=0.08){
-			ctx.fillStyle = "#005910";
+		else if(d[4]>0.6 && d[4]<=0.8){
+			ctx.fillStyle = "#FF0000";
 		}
-		else if(d[4]>0.08 && d[4]<=0.1){
-			ctx.fillStyle = "#002306";
+		else if(d[4]>0.8 && d[4]<=1){
+			ctx.fillStyle = "#59FF00";
 		}
 		ctx.arc(d[0] / resolution , 729 - d[1] / resolution, 3, 0, 2 * Math.PI);
 
