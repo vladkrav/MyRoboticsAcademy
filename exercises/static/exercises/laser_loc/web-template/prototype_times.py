@@ -72,10 +72,6 @@ recorrido = 0
 step_0 = True
 step_1 = True
 step_2 = True
-step_3 = True
-step_4 = True
-step_5 = True
-step_6 = True
 giro = 0
 vel_angular = 0.5
 t0 = time()
@@ -83,104 +79,41 @@ delta_t = 0
 t1 = 0
 t2 = 0
 t3 = 0
-
-r_x0 = HAL.getPose3d().x
-r_y0 = HAL.getPose3d().y
-r_yaw0 = HAL.getPose3d().yaw
 while True:
     # Enter iterative code!
-    posx = HAL.getPose3d().x / 0.03
-    posy = HAL.getPose3d().y / 0.03
-    if(recorrido < 3.0 and step_0 == True):
+    t_a = time() - t0 - delta_t
+    if(recorrido < 5.5 and step_0 == True):
         HAL.setV(velocidad)
-        r_x = HAL.getPose3d().x
-        r_y = HAL.getPose3d().y
-        recorrido = math.sqrt((r_x - r_x0)**2 + (r_y - r_y0)**2)
-        print("El recorrido es:",recorrido)
-        if(recorrido >= 3.0):
+        recorrido = velocidad * t_a
+        print("El tiempo es:", t_a,"mientras el recorrido es:", recorrido)
+        if(recorrido >= 5.5):
             HAL.setV(0)
             step_0 = False
+            t1 = time()
             recorrido = 0
-            r_x0 = HAL.getPose3d().x
-            r_y0 = HAL.getPose3d().y
-            r_yaw0 = HAL.getPose3d().yaw
-    if(giro < math.pi/2 and step_0 == False and step_1 == True):
+            delta_t = 0
+    t_b = time() - t1 - delta_t
+    if(giro < math.pi and step_0 == False and step_1 == True):
         HAL.setW(-vel_angular)
-        r_yaw = HAL.getPose3d().yaw
-        # print("El giro inicial es:", r_yaw0,"y el giro de ahora es:",r_yaw)
-        giro = abs(r_yaw - r_yaw0)
-        print("El giro es:", giro)
-        if(giro >= math.pi/2):
+        giro = vel_angular * t_b
+        print("El tiempo de giro es:",t_b,"mientras el giro es:",giro)
+        if(giro >= math.pi):
             HAL.setW(0)
             step_1 = False
-            giro = 0
-            r_x0 = HAL.getPose3d().x
-            r_y0 = HAL.getPose3d().y
-            r_yaw0 = HAL.getPose3d().yaw
-    if(recorrido < 3.3 and step_0 == False and step_1 == False and step_2 == True):
+            t2 = time()
+            delta_t = 0
+    t_c = time() - t2 - delta_t
+    if(recorrido < 8.0 and step_0 == False and step_1 == False and step_2 == True):
         HAL.setV(velocidad)
-        r_x = HAL.getPose3d().x
-        r_y = HAL.getPose3d().y
-        recorrido = math.sqrt((r_x - r_x0)**2 + (r_y - r_y0)**2)
-        print("El recorrido es:",recorrido)
-        if(recorrido >= 3.3):
+        recorrido = velocidad * t_c
+        print("El tiempo es:", t_c,"mientras el recorrido es:", recorrido)
+        if(recorrido >= 8.0):
             HAL.setV(0)
             step_2 = False
-            recorrido = 0
-            r_x0 = HAL.getPose3d().x
-            r_y0 = HAL.getPose3d().y
-            r_yaw0 = HAL.getPose3d().yaw
-    if(giro < math.pi/2  and step_0 == False and step_1 == False and step_2 == False and step_3 == True):
-        HAL.setW(vel_angular)
-        r_yaw = HAL.getPose3d().yaw
-        # print("El giro inicial es:", r_yaw0,"y el giro de ahora es:",r_yaw)
-        giro = r_yaw - r_yaw0
-        print("El giro es:", giro)
-        if(giro >= math.pi/2):
-            HAL.setW(0)
-            step_3 = False
-            giro = 0
-            r_x0 = HAL.getPose3d().x
-            r_y0 = HAL.getPose3d().y
-            r_yaw0 = HAL.getPose3d().yaw
-    if(recorrido < 2.0 and step_0 == False and step_1 == False and step_2 == False and step_3 == False and step_4 ==True):
-        HAL.setV(velocidad)
-        r_x = HAL.getPose3d().x
-        r_y = HAL.getPose3d().y
-        recorrido = math.sqrt((r_x - r_x0)**2 + (r_y - r_y0)**2)
-        print("El recorrido es:",recorrido)
-        if(recorrido >= 2.0):
-            HAL.setV(0)
-            step_4 = False
-            recorrido = 0
-            r_x0 = HAL.getPose3d().x
-            r_y0 = HAL.getPose3d().y
-            r_yaw0 = HAL.getPose3d().yaw
-    if(giro < math.pi/2 and step_0 == False and step_1 == False and step_2 == False and step_3 == False and step_4 == False and step_5 == True):
-        HAL.setW(-vel_angular)
-        r_yaw = HAL.getPose3d().yaw
-        giro = abs(r_yaw - r_yaw0)
-        print("El giro es:", giro)
-        if(giro >= math.pi/2):
-            HAL.setW(0)
-            step_5 = False
-            giro = 0
-            r_x0 = HAL.getPose3d().x
-            r_y0 = HAL.getPose3d().y
-            r_yaw0 = HAL.getPose3d().yaw
-    if(recorrido < 2.0 and step_0 == False and step_1 == False and step_2 == False and step_3 == False and step_4 ==False and step_5 == False and step_6 == True):
-        HAL.setV(velocidad)
-        r_x = HAL.getPose3d().x
-        r_y = HAL.getPose3d().y
-        recorrido = math.sqrt((r_x - r_x0)**2 + (r_y - r_y0)**2)
-        print("El recorrido es:",recorrido)
-        if(recorrido >= 2.0):
-            HAL.setV(0)
-            step_6 = False
-            recorrido = 0
-            r_x0 = HAL.getPose3d().x
-            r_y0 = HAL.getPose3d().y
-            r_yaw0 = HAL.getPose3d().yaw
+            t3 = time()
+            delta_t = 0
+    posx = HAL.getPose3d().x / 0.03
+    posy = HAL.getPose3d().y / 0.03
     actual_pose_yaw = HAL.getPose3d().yaw
     while(actual_pose_yaw < 0):
         actual_pose_yaw = math.pi*2 + actual_pose_yaw
