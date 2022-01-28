@@ -1,4 +1,4 @@
-<a href="https://www.uah.es/es/"><img src="https://www.uah.es/export/sites/uah/.galleries/imagenes-estructura/logo1.png_105938625.png" width="400" align="right" /></a>
+<a href="https://www.uah.es/es/"><img src="https://www.uah.es/export/sites/uah/.galleries/imagenes-estructura/logo1.png_105938625.png" width="250" align="right" /></a>
 
 # Design and Implementation of the AmigoBot robot in the MatLab-ROS and Robotics-Academy programming environments
 
