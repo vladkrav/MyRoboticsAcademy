@@ -1,4 +1,4 @@
-<a href="https://mmg-ai.com/en/"><img src="https://jderobot.github.io/assets/images/logo.png" width="100 " align="right" /></a>
+<a href="https://www.uah.es/es/"><img src="https://www.uah.es/export/sites/uah/.galleries/imagenes-estructura/logo1.png_105938625.png" width="100 " align="right" /></a>
 
 # RoboticsAcademy: Learn Robotics, Artificial Intelligence and Computer Vision 
 
