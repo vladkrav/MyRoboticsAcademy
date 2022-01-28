@@ -1,4 +1,6 @@
-<a href="https://www.uah.es/es/"><img src="https://www.uah.es/export/sites/uah/.galleries/imagenes-estructura/logo1.png_105938625.png" width="200" align="left" /></a>
+# Final Master's Thesis - University of Alcalá
+
+<a href="https://www.uah.es/es/"><img src="https://www.uah.es/export/sites/uah/.galleries/imagenes-estructura/logo1.png_105938625.png" width="200" align="center" /></a>
 
 # Design and Implementation of the AmigoBot robot in the MatLab-ROS and Robotics-Academy programming environments
 
