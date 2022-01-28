@@ -1,4 +1,4 @@
-<a href="https://www.uah.es/es/"><img src="https://www.uah.es/export/sites/uah/.galleries/imagenes-estructura/logo1.png_105938625.png" width="200" align="right" /></a>
+<a href="https://www.uah.es/es/"><img src="https://www.uah.es/export/sites/uah/.galleries/imagenes-estructura/logo1.png_105938625.png" width="150" align="right" /></a>
 
 # Final Master's Thesis - University of Alcalá 
 
